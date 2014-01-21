@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<!-- Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+		 More info: h5bp.com/i/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<!-- Our site title and description -->
+	<title>API | Law</title>
+	<meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title." />
+	<meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website" />
+	<meta name="author" content="Torchlight Software" />
+
+	<!-- Output DocPad produced meta elements -->
+	<meta name="generator" content="DocPad v6.60.2" />
+
+	<!-- Mobile viewport optimized: h5bp.com/viewport -->
+	<meta name="viewport" content="width=device-width" />
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href="images/icons/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icons/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icons/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/icons/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/icons/apple-touch-icon-57-precomposed.png">
+
+	<!-- Shims: IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+	<!-- Styles -->
+	<style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/styles/twitter-bootstrap.css" /><link  rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+	<!-- Menu -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/">Law</a>
+		</div>
+		<div class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav">
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/about"
+			   class=""
+			   >
+			  <a href="/pages/about" property="dc:title">
+				About
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/api"
+			   class="active"
+			   >
+			  <a href="/pages/api" property="dc:title">
+				API
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/example"
+			   class=""
+			   >
+			  <a href="/pages/example" property="dc:title">
+				Example
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/quickstart"
+			   class=""
+			   >
+			  <a href="/pages/quickstart" property="dc:title">
+				Quickstart
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/tutorial"
+			   class=""
+			   >
+			  <a href="/pages/tutorial" property="dc:title">
+				Tutorial
+			  </a>
+			</li>
+			
+		  </ul>
+		</div><!--/.navbar-collapse -->
+	  </div>
+	</div>
+
+	<!-- Content -->
+	<div class="container">
+	  <!-- Content -->
+	  <section id="content" class="content">
+		<article id="page" class="page">
+	<h1>API</h1>
+	<div class="page-content"><h2 id="definition-formats">Definition formats</h2>
+<p>Law primarily consumes and operates on three important data structures,
+which define services, application-specific types and validations (&quot;jargon&quot;),
+and the application of policies to the various services (&quot;policy&quot;). These
+are described below.</p>
+<h3 id="services">Services</h3>
+<p>Array of service definitions, which are objects
+of the form <code>{serviceName: serviceDef}</code>.</p>
+<p>The <code>serviceDef</code> can either a function with signature <code>(args, callback)</code>,
+or an object of the form:</p>
+<pre class="highlight"><code class="r">{
+  required: [] <span class="hljs-comment"># array of required arguments</span>
+  dependencies:
+    <span class="hljs-comment"># Key is a resolvable dependency category</span>
+    <span class="hljs-comment"># Value is an array of valid dependency names</span>
+    depCategory: [<span class="hljs-string">'depName1'</span>, <span class="hljs-string">'depName2'</span>, <span class="hljs-keyword">...</span>]
+  <span class="hljs-comment"># Actual async function defining the service</span>
+  service: (args, done) -&gt; <span class="hljs-keyword">...</span>
+}
+</code></pre><h3 id="jargon">Jargon</h3>
+<p>A &quot;jargon&quot; definition, which is an array of type definitions of the form:</p>
+<pre class="highlight"><code class="fsharp">{
+  # Name <span class="hljs-keyword">of</span> the <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">being</span> <span class="hljs-title">defined</span></span>
+  typeName: <span class="hljs-string">"nameOfType # String
+
+  # Validation function with signature `(arg, assert)`
+  validation: (arg, assert) -&gt; ...
+
+  defaultArgs: ...
+}
+</span></code></pre><h3 id="policy">Policy</h3>
+<h2 id="-law-"><code>law</code></h2>
+<h3 id="-create-"><code>create</code></h3>
+<h4 id="description">Description</h4>
+<p>This is a convenience method to wrap service definitions
+in a complete middleware stack. This is what you will want
+to use in most situations.</p>
+<h4 id="accepts">Accepts</h4>
+<ul>
+<li><p><code>Object</code> :</p>
+<ul>
+<li><code>services</code> : <code>&lt;ServiceDefs&gt;</code></li>
+<li><code>jargon</code> : <code>&lt;JargonDef&gt;</code></li>
+<li><code>policy</code> : <code>&lt;PolicyDef&gt;</code></li>
+<li><p><code>resolvers</code> : <code>&lt;Object&gt;</code></p>
+<p>Object mapping dependency categories to means of resolving.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="returns">Returns</h4>
+<p>An object of the form:</p>
+<pre class="highlight"><code class="css"><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">serviceName</span>:<span class="hljs-value"> &lt;ServiceObject&gt;
+</span></span></span>}
+</code></pre><p>Where <code>ServiceObject</code> is the function from the service definition, but
+endowed with validations and runtime dependency injection.</p>
+<h3 id="-load-"><code>load</code></h3>
+<h4 id="description">Description</h4>
+<p>Loads service definitions from a directory in the file system.
+Services are assumed to be defined in separate files.</p>
+<h4 id="accepts">Accepts</h4>
+<ul>
+<li><p><code>folder</code> : <code>String</code></p>
+<p>Path to the folder containing the service definitions as modules.</p>
+</li>
+<li><p><code>[prefix]</code> : <code>String</code> (Optional)</p>
+<p>Optional prefix for the resulting service names.</p>
+</li>
+</ul>
+<h4 id="returns">Returns</h4>
+<ul>
+<li><p><code>serviceDefs</code> : <code>&lt;Object(ServiceName, ServiceDef)&gt;</code></p>
+<p>Where <code>serviceDefs</code> is an object mapping a <code>ServiceName</code> : <code>String</code> to
+the service definition exported by each discovered module in <code>folder</code>.</p>
+</li>
+</ul>
+<p><a name="applyMiddleware"></a></p>
+<h3 id="-applymiddleware-applymiddleware-"><a href="#applyMiddleware"><code>applyMiddleware</code></a></h3>
+<h4 id="description">Description</h4>
+<p>Wraps services with access/lookup policy.</p>
+<h4 id="accepts">Accepts</h4>
+<ul>
+<li><code>services</code> : <code>&lt;ServiceDefs&gt;</code></li>
+<li><code>jargon</code> : <code>&lt;JargonDef&gt;</code></li>
+</ul>
+<h4 id="returns">Returns</h4>
+<ul>
+<li><p><code>&lt;Object&gt;</code> :</p>
+<pre class="highlight"><code class="css"><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">serviceName</span>:<span class="hljs-value"> &lt;ServiceObject&gt;
+</span></span></span>}
+</code></pre><p>Where <code>ServiceObject</code> is the function from the service definition, but
+endowed with call-time validations defined by the jargon file.</p>
+</li>
+</ul>
+<p><a name="applyPolicy"></a></p>
+<h3 id="-applypolicy-applypolicy-"><a href="#applyPolicy"><code>applyPolicy</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h3 id="-applydependencies-applydependencies-"><a href="#applyDependencies"><code>applyDependencies</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h3 id="-printfilters-printfilters-"><a href="#printFilters"><code>printFilters</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h3 id="-graph-graph-"><a href="#graph"><code>graph</code></a></h3>
+<h4 id="description">Description</h4>
+<h3 id="-errors-errors-"><a href="#errors"><code>errors</code></a></h3>
+<h4 id="description">Description</h4>
+<h2 id="-law-graph-"><code>law.graph</code></h2>
+<h3 id="-adjacentdependencies-adjacentdependencies-"><a href="#adjacentDependencies"><code>adjacentDependencies</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h3 id="-adjacencyrelation-adjacencyrelation-"><a href="#adjacencyRelation"><code>adjacencyRelation</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h3 id="-connecteddependencies-connecteddependencies-"><a href="#connectedDependencies"><code>connectedDependencies</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h3 id="-dotnotation-dotnotation-"><a href="#dotNotation"><code>dotNotation</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<h2 id="-law-errors-"><code>law.errors</code></h2>
+<h3 id="description">Description</h3>
+<p>Law provides standard subtypes of <code>Error</code>, enriched using the <code>tea-error</code>
+library (<a href="https://github.com/qualiancy/tea-error">https://github.com/qualiancy/tea-error</a>). This means a <code>properties</code>
+object can be attached to the <code>Error</code> instance upon construction, as well
+as an indicator of the function that the stack trace should start from.</p>
+<p>We provide a <code>LawError</code> subtype of <code>Error</code> that acts as a common parent to
+all the more specific error subtypes. Extensions to Law should extend this
+type to obtain the benefits of <code>tea-error</code>, as well as permitting distinction
+between instances of Law errors from application errors.</p>
+<h3 id="-lawerror-lawerror-"><a href="#LawError"><code>LawError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>Common parent type of errors within the Law library (and extensions).
+Endowed with extra metadata couresty <code>tea-error</code>.</p>
+<h3 id="-failedargumentlookuperror-failedargumentlookuperror-"><a href="#FailedArgumentLookupError"><code>FailedArgumentLookupError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>Unused.</p>
+<h3 id="-invalidargumenterror-invalidargumenterror-"><a href="#InvalidArgumentError"><code>InvalidArgumentError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>An argument passed to a Law service exists, but has failed a validation.
+Occurs at call time</p>
+<h3 id="-invalidargumentsobjecterror-invalidargumentsobjecterror-"><a href="#InvalidArgumentsObjectError"><code>InvalidArgumentsObjectError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>The <code>args</code> argument of a service call was not an instance of <code>object</code>.
+Occurs at call time.</p>
+<h3 id="-invalidservicenameerror-invalidservicenameerror-"><a href="#InvalidServiceNameError"><code>InvalidServiceNameError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>A serviceName that appears in the policy file has no referent amongst the actual
+discovered services. Occurs when processing the policy file.</p>
+<h3 id="-missingargumenterror-missingargumenterror-"><a href="#MissingArgumentError"><code>MissingArgumentError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>A required argument was not present in the <code>args</code> object passed to the service.
+Occurs at call time.</p>
+<h3 id="-nofilterarrayerror-nofilterarrayerror-"><a href="#NoFilterArrayError"><code>NoFilterArrayError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>Thrown when a (malformed) rule in the policy file does not have any filters.
+Occurs at setup time, when applying policy rules to services.</p>
+<h3 id="-servicedefinitionnocallableerror-servicedefinitionnocallableerror-"><a href="#ServiceDefinitionNoCallableError"><code>ServiceDefinitionNoCallableError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>A service definition did not provide a callable (instance of <code>function</code>).
+Occurs when when wrapping services at setup time.</p>
+<h3 id="-servicedefinitiontypeerror-servicedefinitiontypeerror-"><a href="#ServiceDefinitionTypeError"><code>ServiceDefinitionTypeError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>The service definition was neither a function nor a richer service definition
+object containing metadata and optional Law declarations. Occurs at setup time.</p>
+<h3 id="-servicereturntypeerror-servicereturntypeerror-"><a href="#ServiceReturnTypeError"><code>ServiceReturnTypeError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>The return value of a service (chained in a computed stack of services) is
+not an object. Occurs at call time.</p>
+<h3 id="-unresolvabledependencyerror-unresolvabledependencyerror-"><a href="#UnresolvableDependencyError"><code>UnresolvableDependencyError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>A particular dependency in a valid (resolvable) dependency category could
+not be resolved using the configuration given</p>
+<h3 id="-unresolvabledependencytypeerror-unresolvabledependencytypeerror-"><a href="#UnresolvableDependencyTypeError"><code>UnresolvableDependencyTypeError</code></a></h3>
+<h4 id="description">Description</h4>
+<p>A service declared an unresolvable dependency category. For example, if the
+resolver configuration doesn&#39;t define a way to resolve dependencies in a
+<code>services</code> category, this error would be thrown. Occurs at setup time, when
+resolving dependencies.</p>
+</div>
+</article>
+	  </section>
+
+	  <!-- Footer -->
+	  <footer>
+		<p class="pull-left">&copy; Torchlight Software 2014</p>
+	  </footer>
+	</div><!-- /container -->
+
+	<!-- Scripts -->
+	<script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script><script defer="defer"  src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script defer="defer"  src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script><script defer="defer"  src="/vendor/twitter-bootstrap/dist/js/bootstrap.min.js"></script><script defer="defer"  src="/scripts/script.js"></script>
+  </body>
+</html>

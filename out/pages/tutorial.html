@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<!-- Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+		 More info: h5bp.com/i/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<!-- Our site title and description -->
+	<title>Tutorial | Law</title>
+	<meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title." />
+	<meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website" />
+	<meta name="author" content="Torchlight Software" />
+
+	<!-- Output DocPad produced meta elements -->
+	<meta name="generator" content="DocPad v6.60.2" />
+
+	<!-- Mobile viewport optimized: h5bp.com/viewport -->
+	<meta name="viewport" content="width=device-width" />
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href="images/icons/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icons/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icons/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/icons/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/icons/apple-touch-icon-57-precomposed.png">
+
+	<!-- Shims: IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+	<!-- Styles -->
+	<style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/styles/twitter-bootstrap.css" /><link  rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+	<!-- Menu -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/">Law</a>
+		</div>
+		<div class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav">
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/about"
+			   class=""
+			   >
+			  <a href="/pages/about" property="dc:title">
+				About
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/api"
+			   class=""
+			   >
+			  <a href="/pages/api" property="dc:title">
+				API
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/example"
+			   class=""
+			   >
+			  <a href="/pages/example" property="dc:title">
+				Example
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/quickstart"
+			   class=""
+			   >
+			  <a href="/pages/quickstart" property="dc:title">
+				Quickstart
+			  </a>
+			</li>
+			
+			<li
+			   typeof="sioc:Page"
+			   about="/pages/tutorial"
+			   class="active"
+			   >
+			  <a href="/pages/tutorial" property="dc:title">
+				Tutorial
+			  </a>
+			</li>
+			
+		  </ul>
+		</div><!--/.navbar-collapse -->
+	  </div>
+	</div>
+
+	<!-- Content -->
+	<div class="container">
+	  <!-- Content -->
+	  <section id="content" class="content">
+		<article id="page" class="page">
+	<h1>Tutorial</h1>
+	<div class="page-content"><h2 id="application-files">Application Files</h2>
+<p>Following are some possible uses of Law.  Further options are described in the <a href="/pages/api">full API documenation</a>.</p>
+<p>Here&#39;s an example service.  Law will construct a function from this which will enforce the required/optional parameters.  Both optional and required parameters will run any associated validations.</p>
+<h3 id="getrole-coffee">getRole.coffee</h3>
+<pre class="highlight"><code class="coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> =
+  <span class="hljs-attribute">required</span>: [<span class="hljs-string">'sessionId'</span>]
+  <span class="hljs-attribute">optional</span>: [<span class="hljs-string">'specialKey'</span>]
+  <span class="hljs-attribute">service</span>: <span class="hljs-function"><span class="hljs-params">({sessionId, specialKey}, done)</span> -&gt;</span>
+
+    <span class="hljs-comment"># check the sessionId against the database</span>
+
+    done <span class="hljs-literal">null</span>, {<span class="hljs-attribute">role</span>: <span class="hljs-string">'Supreme Commander'</span>}
+</code></pre>
+<p>Here&#39;s some example argument types, and their validations.  Law makes these available in the definition of services.  You can think of them as the language that a particular set of services share.  Whenever these names are used in service arguments, their meanings will be enforced by the rules you set here.</p>
+<h3 id="jargon-coffee">jargon.coffee</h3>
+<pre class="highlight"><code class="coffeescript">redisId = <span class="hljs-regexp">/[a-z0-9]{16}/</span>
+mongoId = <span class="hljs-regexp">/[a-f0-9]{24}/</span>
+
+<span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+    <span class="hljs-attribute">typeName</span>: <span class="hljs-string">'String'</span>
+    <span class="hljs-attribute">validation</span>: <span class="hljs-function"><span class="hljs-params">(arg, assert)</span> -&gt;</span>
+      assert <span class="hljs-keyword">typeof</span> arg <span class="hljs-keyword">is</span> <span class="hljs-string">'string'</span>
+    <span class="hljs-attribute">defaultArgs</span>: [<span class="hljs-string">'email'</span>, <span class="hljs-string">'password'</span>, <span class="hljs-string">'sessionId'</span>, <span class="hljs-string">'userId'</span>]
+  ,
+    <span class="hljs-attribute">typeName</span>: <span class="hljs-string">'SessionId'</span>
+    <span class="hljs-attribute">validation</span>: <span class="hljs-function"><span class="hljs-params">(arg, assert)</span> -&gt;</span>
+      assert arg.match redisId
+    <span class="hljs-attribute">defaultArgs</span>: [<span class="hljs-string">'sessionId'</span>]
+  ,
+    <span class="hljs-attribute">typeName</span>: <span class="hljs-string">'MongoId'</span>
+    <span class="hljs-attribute">validation</span>: <span class="hljs-function"><span class="hljs-params">(arg, assert)</span> -&gt;</span>
+      assert arg.match mongoId
+    <span class="hljs-attribute">defaultArgs</span>: [<span class="hljs-string">'userId'</span>]
+]
+</code></pre>
+<p>Here&#39;s an example policy file.  The filters named here are defined as regular services, but they are run in a slightly different context.  If they return an error, the filter stack stops and returns it, otherwise their results are merged into the argument stream and passed on to the next service in the stack.</p>
+<h3 id="policy-coffee">policy.coffee</h3>
+<pre class="highlight"><code class="coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> =
+  <span class="hljs-attribute">filterPrefix</span>: <span class="hljs-string">'filters'</span>
+  <span class="hljs-attribute">rules</span>:
+    [
+      {
+        <span class="hljs-attribute">filters</span>: [<span class="hljs-string">'isLoggedIn'</span>]
+        <span class="hljs-attribute">except</span>: [
+          <span class="hljs-string">'getRole'</span>
+          <span class="hljs-string">'login'</span>
+        ]
+      }
+
+      {
+        <span class="hljs-attribute">filters</span>: [<span class="hljs-string">'setIsOnline'</span>]
+        <span class="hljs-attribute">only</span>: [<span class="hljs-string">'dashboard'</span>]
+      }
+    ]
+</code></pre>
+</div>
+</article>
+	  </section>
+
+	  <!-- Footer -->
+	  <footer>
+		<p class="pull-left">&copy; Torchlight Software 2014</p>
+	  </footer>
+	</div><!-- /container -->
+
+	<!-- Scripts -->
+	<script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script><script defer="defer"  src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script defer="defer"  src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script><script defer="defer"  src="/vendor/twitter-bootstrap/dist/js/bootstrap.min.js"></script><script defer="defer"  src="/scripts/script.js"></script>
+  </body>
+</html>

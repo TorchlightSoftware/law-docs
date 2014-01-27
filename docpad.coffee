@@ -21,7 +21,7 @@ docpadConfig =
       ]
 
       # The default title of our website
-      title: "Your Website"
+      title: "Law"
 
       # The website description (for SEO)
       description: """
@@ -37,10 +37,10 @@ docpadConfig =
       author: "Your Name"
 
       # The website author's email
-      email: "your@email.com"
+      email: "info@torchlightsoftware.com"
 
       # Your company's name
-      copyright: "© Your Company 2013"
+      copyright: "© TorchlightSoftware 2014"
 
 
     # Helper Functions

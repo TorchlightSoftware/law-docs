@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta-->
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Law | Law</title>
+    <meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title.">
+    <meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website">
+    <meta name="author" content="Your Name"><meta name="generator" content="DocPad v6.60.3" />
+    <meta name="viewport" content="width=device-width">
+    <!-- Icons-->
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
+    <!--[if lt IE 9]>
+    <script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Styles--><style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/vendor/prettify.css" /><link  rel="stylesheet" href="/vendor/components-bootstrap/css/bootstrap.css" /><link  rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <!-- Markup-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header"><a href="/" class="navbar-brand">Welcome</a></div>
+        <ul class="nav navbar-nav">
+          <li typeof="sioc:Page" about="/pages/api"><a href="/pages/api" property="dc:title">API</a></li>
+          <li typeof="sioc:Page" about="/pages/examples"><a href="/pages/examples" property="dc:title">Examples</a></li>
+          <li typeof="sioc:Page" about="/pages/tutorials"><a href="/pages/tutorials" property="dc:title">Tutorials</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <section id="content" class="content">
+<!-- Main hero unit for a primary marketing message or call to action.-->
+<div class="jumbotron">
+  <h1>Law</h1>
+  <p><p>Law is a middleware layer for tying together:</p>
+<ol>
+<li>A set of services</li>
+<li>Argument validations and lookups</li>
+<li>An access control policy</li>
+</ol>
+
+  </p>
+</div>
+<!-- Example row of columns.-->
+<div class="row">
+  <div class="col-md-6">
+    <h2>Domain-driven</h2>
+    <p>Law lets you write an API in the language of your problem.</p>
+    <p>Pull argument validation out of your services and into a "jargon" file.</p>
+    <p><a href="https://github.com/TorchlightSoftware/law" class="btn btn-default">Visit Website</a></p>
+  </div>
+  <div class="col-md-6">
+    <h2>Works with what you work with</h2>
+    <p>Law services are just functions, and can be exposed via REST, websockets, or any other transport.</p>
+    <p>Check out the Connect middleware for exposing your Law services via HTTP!</p>
+    <p><a href="https://github.com/TorchlightSoftware/law-connect" class="btn btn-default">Law-Connect</a></p>
+  </div>
+</div>
+<div class="something"><h1 id="law">Law</h1>
+<h2 id="less-strictly-constitutional-and-more-strictly-awesome-">Less strictly constitutional and more strictly awesome.</h2>
+<p>This project was motivated by the desire to take a lot of validation and error handling logic out of our services, and put it in a declarative layer.</p>
+<p>Law is framework and transport agnostic.  Its focus is on enforcing the business rules specific to your application.  In our applications, we have connected these services to REST, websockets, and a programmatic API through the use of adapters.  I present below an example that should help to tie in as connect middleware.  Hopefully there will be enough information here to make this a useful tool for those interested.  If you&#39;re having trouble getting things working, let me know.</p>
+<p><img src="https://api.travis-ci.org/TorchlightSoftware/law.png" alt="Build Status"></p>
+<h2 id="credit-inspiration">Credit/Inspiration</h2>
+<p>Our approach to policies was inspired by the filter lifecycle from Ruby on Rails.  The argument validations take some ideas from Design By Contract, e.g. preconditions.  Applying validators to default names was suggested by @JosephJNK.  I am interested to see if this will be conducive to creating a &#39;ubiquitous language&#39; as described by Eric Evans in Domain Driven Design.</p>
+<p>The separation of Express and Connect has influenced our decision to do the same.  I think that while frameworks can lead to gains in terms of productivity, a library has greater potential for re-use.</p>
+<p>Many thanks to @wearefractal (@amurray, @contra), @JosephJNK, and @uberscientist for conversations and collaboration on application design with functional and declarative programming.</p>
+<h2 id="application-files">Application Files</h2>
+<p>Following are some possible uses of Law.  Further options are described in the [extended documentation].</p>
+<p>Here&#39;s an example service.  Law will construct a function from this which will enforce the required/optional parameters.  Both optional and required parameters will run any associated validations.</p>
+<h3 id="getrole-coffee">getRole.coffee</h3>
+<pre><code class="lang-coffee-script">module.exports =
+  required: [&#39;sessionId&#39;]
+  optional: [&#39;specialKey&#39;]
+  service: ({sessionId, specialKey}, done) -&gt;
+
+    # check the sessionId against the database
+
+    done null, {role: &#39;Supreme Commander&#39;}
+</code></pre>
+<p>Here&#39;s some example argument types, and their validations.  Law makes these available in the definition of services.  You can think of them as the language that a particular set of services share.  Whenever these names are used in service arguments, their meanings will be enforced by the rules you set here.</p>
+<h3 id="jargon-coffee">jargon.coffee</h3>
+<pre><code class="lang-coffee-script">redisId = /[a-z0-9]{16}/
+mongoId = /[a-f0-9]{24}/
+
+module.exports = [
+    typeName: &#39;String&#39;
+    validation: (arg, assert) -&gt;
+      assert typeof arg is &#39;string&#39;
+    defaultArgs: [&#39;email&#39;, &#39;password&#39;, &#39;sessionId&#39;, &#39;userId&#39;]
+,
+    typeName: &#39;SessionId&#39;
+    validation: (arg, assert) -&gt;
+      assert arg.match redisId
+    defaultArgs: [&#39;sessionId&#39;]
+,
+    typeName: &#39;MongoId&#39;
+    validation: (arg, assert) -&gt;
+      assert arg.match mongoId
+    defaultArgs: [&#39;userId&#39;]
+]
+</code></pre>
+<p>Here&#39;s an example policy file.  The filters named here are defined as regular services, but they are run in a slightly different context.  If they return an error, the filter stack stops and returns it, otherwise their results are merged into the argument stream and passed on to the next service in the stack.</p>
+<h3 id="policy-coffee">policy.coffee</h3>
+<pre><code class="lang-coffee-script">module.exports =
+  filterPrefix: &#39;filters&#39;
+  rules:
+    [
+      {
+        filters: [&#39;isLoggedIn&#39;]
+        except: [
+          &#39;getRole&#39;
+          &#39;login&#39;
+        ]
+      }
+
+      {
+        filters: [&#39;setIsOnline&#39;]
+        only: [&#39;dashboard&#39;]
+      }
+    ]
+</code></pre>
+<h2 id="dependencies">Dependencies</h2>
+<p>Since version 0.1.1 Law supports declarative dependency injection.  The two built in loaders are:</p>
+<ul>
+<li>services: call sibling services</li>
+<li>lib: a shortcut to require</li>
+</ul>
+<p>This lets us do static analysis of dependencies, and can be used as a way of making side effects explicit.</p>
+<pre><code class="lang-coffee-script">module.exports =
+  required: [&#39;sessionId&#39;]
+  dependencies:
+    services: [&#39;aHelperService&#39;]
+    lib: [&#39;lodash&#39;]
+
+  service: (args, done, {services, require}) -&gt;
+    args = lib.lodash.merge {myOpt: 1}, args
+    services.aHelperService args, done
+</code></pre>
+<p>To add more loaders, just plug in a resolvers object when you load your services:</p>
+<pre><code class="lang-coffee-script">resolvers = {
+  myLoader: (name) -&gt; loadIt(name)
+}
+
+law.create {services, jargon, policy, resolvers}
+</code></pre>
+<h2 id="value">Value</h2>
+<p>Through this approach we accomplish the following:</p>
+<ol>
+<li>Decoupling between validations and domain logic</li>
+<li>Access control is described in one place</li>
+<li>The preconditions for services are declarative</li>
+</ol>
+<p>Because the structure binding these pieces together is declarative, we can easily make it visible for analysis and troubleshooting.  Here is a printout from the sample application.</p>
+<pre><code class="lang-coffee-script">#&gt; console.log law.printFilters services
+
+{ dashboard: [ &#39;filters/isLoggedIn&#39;, &#39;filters/setIsOnline&#39;, &#39;dashboard&#39; ],
+  &#39;filters/isLoggedIn&#39;:
+   [ &#39;sessionId.exists&#39;,
+     &#39;sessionId.isValid(SessionId)&#39;,
+     &#39;filters/isLoggedIn&#39; ],
+  &#39;filters/setIsOnline&#39;: [ &#39;filters/setIsOnline&#39; ],
+  getRole: [ &#39;sessionId.exists&#39;, &#39;sessionId.isValid(SessionId)&#39;, &#39;getRole&#39; ],
+  login: [ &#39;login&#39; ] }
+</code></pre>
+<h2 id="getting-started">Getting Started</h2>
+<pre><code class="lang-bash">npm install law
+</code></pre>
+<p>Before you can start using the facilities mentioned above in your app, you&#39;ll need to wire some things up.  This being a library intended to support a not-yet-released framework, no assumptions are made about the locations of your files.  You&#39;ll need something like the following to initialize and connect the services when your application starts.</p>
+<h3 id="initlaw-coffee">initLaw.coffee</h3>
+<pre><code class="lang-coffee-script">should = require &#39;should&#39;
+{join} = require &#39;path&#39;
+
+# lib stuff
+connect = require &#39;connect&#39;
+{load, create, printFilters} = require &#39;law&#39;
+
+# files from the sample app
+serviceLocation = join __dirname, &#39;../sample/app/domain/auth/services&#39;
+argTypes = require &#39;../sample/app/domain/auth/jargon&#39;
+policy = require &#39;../sample/app/domain/auth/policy&#39;
+
+services = load serviceLocation
+services = create {services, jargon, policy}
+console.log &quot;I am the law:&quot;, printFilters services
+</code></pre>
+<p>This gives you a hash of {serviceName, serviceDef}.  Now if you wanted to use that, say as connect middleware, you could write up some basic routing like so.</p>
+<h3 id="connectadapter-coffee">connectAdapter.coffee</h3>
+<pre><code class="lang-coffee-script">app = connect()
+app.use (req, res) -&gt;
+
+  # find service to call, or return 404
+  pathParts = req._parsedUrl.pathname.split(&#39;/&#39;).remove &#39;&#39;
+  resourceName = pathParts[0]
+  service = resourceMap[resourceName] or -&gt;
+    res.writeHead 404
+    res.end()
+
+  # call service
+  service {
+      url: req.url
+      headers: req.headers
+      query: req.query || {}
+      pathParts: pathParts
+      cookies: req.cookies
+  }, res
+</code></pre>
+<h2 id="further-reading">Further Reading</h2>
+<p>You can find [extended documentation here].</p>
+<h2 id="project-status">Project Status</h2>
+<p>This should be considered an alpha release.  The API may change.  It was developed within an active project with the intent to only build the features which give us a clear advantage.  Additional features will be added as required for the parent project.</p>
+<p>Discussion/feedback is welcome.  You can reach me on twitter @qbitmage.</p>
+<p>Future goals/possibilities:</p>
+<ol>
+<li>Unit tests for each component file.</li>
+<li>Standard adapters for websocket RPC, REST</li>
+<li>Enforce post-conditions?</li>
+<li>Development of a contract-driven web framework.</li>
+</ol>
+<h2 id="the-fine-print">The Fine Print</h2>
+<p>(MIT License)</p>
+<p>Copyright (c) 2013 Torchlight Software <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#58;&#105;&#110;&#102;&#x6f;&#64;&#x74;&#x6f;&#114;&#99;&#104;&#x6c;&#105;&#103;&#x68;&#x74;&#x73;&#111;&#102;&#116;&#x77;&#x61;&#114;&#x65;&#46;&#99;&#111;&#x6d;">&#105;&#110;&#102;&#x6f;&#64;&#x74;&#x6f;&#114;&#99;&#104;&#x6c;&#105;&#103;&#x68;&#x74;&#x73;&#111;&#102;&#116;&#x77;&#x61;&#114;&#x65;&#46;&#99;&#111;&#x6d;</a></p>
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+</div></section>
+      <hr>
+      <footer>
+        <div>© TorchlightSoftware 2014</div>
+        <div style="font-style:italic; font-size: 12px">This website was last updated at Mon Jan 27 2014 08:39:11 GMT-0800 (PST)</div>
+      </footer>
+    </div>
+    <!-- Scripts--><script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script><script defer="defer"  src="/vendor/prettify.js"></script><script defer="defer"  src="/vendor/jquery/jquery.js"></script><script defer="defer"  src="/vendor/components-bootstrap/js/bootstrap.js"></script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
+  </body>
+</html>

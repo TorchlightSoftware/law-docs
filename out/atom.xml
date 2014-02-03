@@ -3,7 +3,7 @@
   <title>Law</title>
   <link href="http://website.com/atom.xml" rel="self"/>
   <link href="http://website.com"/>
-  <updated>2014-01-27T16:39:11.673Z</updated>
+  <updated>2014-02-03T21:05:26.109Z</updated>
   <id>http://website.com</id>
   <author>
     <name>Your Name</name>
@@ -14,7 +14,7 @@
     <entry>
       <title>This is a Blog Post</title>
       <link href="http://website.com/posts/hello"/>
-      <updated>2014-01-27T16:39:12.187Z</updated>
+      <updated>2014-01-27T19:54:01.000Z</updated>
       <id>http://website.com/posts/hello</id>
       <content type="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -26,7 +26,7 @@
     &lt;title&gt;This is a Blog Post | Law&lt;/title&gt;
     &lt;meta name=&quot;description&quot; content=&quot;When your website appears in search results in say Google, the text here will be shown underneath your website's title.&quot;&gt;
     &lt;meta name=&quot;keywords&quot; content=&quot;place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website&quot;&gt;
-    &lt;meta name=&quot;author&quot; content=&quot;Your Name&quot;&gt;&lt;meta name=&quot;generator&quot; content=&quot;DocPad v6.60.3&quot; /&gt;
+    &lt;meta name=&quot;author&quot; content=&quot;Your Name&quot;&gt;&lt;meta name=&quot;generator&quot; content=&quot;DocPad v6.63.3&quot; /&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;
     &lt;!-- Icons--&gt;
     &lt;link rel=&quot;shortcut icon&quot; href=&quot;/ico/favicon.ico&quot;&gt;
@@ -67,7 +67,7 @@
       &lt;hr&gt;
       &lt;footer&gt;
         &lt;div&gt;© TorchlightSoftware 2014&lt;/div&gt;
-        &lt;div style=&quot;font-style:italic; font-size: 12px&quot;&gt;This website was last updated at Mon Jan 27 2014 08:39:11 GMT-0800 (PST)&lt;/div&gt;
+        &lt;div style=&quot;font-style:italic; font-size: 12px&quot;&gt;This website was last updated at Mon Feb 03 2014 13:05:26 GMT-0800 (PST)&lt;/div&gt;
       &lt;/footer&gt;
     &lt;/div&gt;
     &lt;!-- Scripts--&gt;&lt;script &gt;(function(){

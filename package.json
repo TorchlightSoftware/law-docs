@@ -40,7 +40,8 @@
     "docpad-plugin-text": "~2.3.2",
     "docpad-plugin-jade": "2.x",
     "docpad-plugin-related": "2.x",
-    "marked": "*"
+    "marked": "*",
+    "law": "git+https://github.com/TorchlightSoftware/law.git#doc"
   },
   "devDependencies": {
     "docpad-plugin-livereload": "2.x",

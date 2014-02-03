@@ -1,0 +1,217 @@
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>auth.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>should = <span class="hljs-built_in">require</span> <span class="hljs-string">'should'</span>
+logger = <span class="hljs-built_in">require</span> <span class="hljs-string">'torch'</span>
+{join} = <span class="hljs-built_in">require</span> <span class="hljs-string">'path'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>lib stuff</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>{load, applyMiddleware, applyPolicy, printFilters, create} = <span class="hljs-built_in">require</span> <span class="hljs-string">'../lib/main'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>sample stuff</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>jargon = <span class="hljs-built_in">require</span> <span class="hljs-string">'../sample/app/domain/auth/jargon'</span>
+serviceLocation = join __dirname, <span class="hljs-string">'../sample/app/domain/auth/services'</span>
+policy = <span class="hljs-built_in">require</span> <span class="hljs-string">'../sample/app/domain/auth/policy'</span>
+
+describe <span class="hljs-string">"auth"</span>,<span class="hljs-function"> -&gt;</span>
+
+  describe <span class="hljs-string">"getServices"</span>,<span class="hljs-function"> -&gt;</span>
+    it <span class="hljs-string">'should load a set of services'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      serviceDefs = load serviceLocation
+
+      (<span class="hljs-keyword">typeof</span> serviceDefs).should.eql <span class="hljs-string">'object'</span>
+      (<span class="hljs-keyword">typeof</span> serviceDefs.login).should.eql <span class="hljs-string">'function'</span>
+      (<span class="hljs-keyword">typeof</span> serviceDefs.getRole).should.eql <span class="hljs-string">'object'</span>
+      done()
+
+  describe <span class="hljs-string">"applyMiddleware"</span>,<span class="hljs-function"> -&gt;</span>
+    it <span class="hljs-string">'should not error with empty jargon'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      serviceDefs = load serviceLocation
+      services = applyMiddleware serviceDefs <span class="hljs-comment"># no jargon</span>
+
+      (<span class="hljs-keyword">typeof</span> services.login).should.eql <span class="hljs-string">'function'</span>
+      (<span class="hljs-keyword">typeof</span> services.getRole).should.eql <span class="hljs-string">'function'</span>
+      done()
+
+    it <span class="hljs-string">'should generate usable services'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      serviceDefs = load serviceLocation
+      services = applyMiddleware serviceDefs, jargon
+
+      (<span class="hljs-keyword">typeof</span> services.login).should.eql <span class="hljs-string">'function'</span>
+      (<span class="hljs-keyword">typeof</span> services.getRole).should.eql <span class="hljs-string">'function'</span>
+      done()
+
+  describe <span class="hljs-string">"applyPolicy"</span>,<span class="hljs-function"> -&gt;</span>
+    it <span class="hljs-string">'should apply policy to services'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      serviceDefs = load serviceLocation
+      services = applyMiddleware serviceDefs, jargon
+      filteredServices = applyPolicy services, policy
+
+      (<span class="hljs-keyword">typeof</span> services.login).should.eql <span class="hljs-string">'function'</span>
+      (<span class="hljs-keyword">typeof</span> services.getRole).should.eql <span class="hljs-string">'function'</span>
+      done()
+
+    it <span class="hljs-string">'should apply empty policy'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      serviceDefs = load serviceLocation
+      services = applyMiddleware serviceDefs, jargon
+      filteredServices = applyPolicy services <span class="hljs-comment"># no policy</span>
+
+      (<span class="hljs-keyword">typeof</span> services.login).should.eql <span class="hljs-string">'function'</span>
+      (<span class="hljs-keyword">typeof</span> services.getRole).should.eql <span class="hljs-string">'function'</span>
+      done()
+
+  describe <span class="hljs-string">"full stack"</span>,<span class="hljs-function"> -&gt;</span>
+    beforeEach <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      services = load serviceLocation
+      <span class="hljs-property">@services</span> = create {services, jargon, policy}
+      done()
+
+    it <span class="hljs-string">'should maintain binding context'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      <span class="hljs-property">@services</span>.relayContext.call {<span class="hljs-attribute">prop</span>: <span class="hljs-number">2</span>}, {}, <span class="hljs-function"><span class="hljs-params">(err, context)</span> -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>logger.blue {context}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        should.exist context?.prop
+        context.prop.should.eql <span class="hljs-number">2</span>
+        done()
+
+    it <span class="hljs-string">'should allow login to continue unhindered'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      <span class="hljs-property">@services</span>.login {}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+        should.<span class="hljs-keyword">not</span>.exist err
+        should.exist result
+        result.sessionId.should.eql <span class="hljs-string">'foo'</span>
+        done()
+
+    it <span class="hljs-string">'should be callable without args'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      <span class="hljs-property">@services</span>.login <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+        should.<span class="hljs-keyword">not</span>.exist err
+        should.exist result
+        result.sessionId.should.eql <span class="hljs-string">'foo'</span>
+        done()
+
+    it <span class="hljs-string">'should prevent dashboard from being accessed'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      <span class="hljs-property">@services</span>.dashboard {}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+        should.exist err?.message, <span class="hljs-string">'expected error'</span>
+        err.message.should.eql <span class="hljs-string">"'filters/isLoggedIn' requires 'sessionId' to be defined."</span>
+        <span class="hljs-keyword">for</span> field <span class="hljs-keyword">in</span> [<span class="hljs-string">'reason'</span>, <span class="hljs-string">'fieldName'</span>, <span class="hljs-string">'serviceName'</span>]
+          Object.keys(err).should.include field
+        done()
+
+    it <span class="hljs-string">'should require results to be an object'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      <span class="hljs-property">@services</span>.invalidReturn {}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+        should.exist err?.message, <span class="hljs-string">'expected error'</span>
+        err.message.should.eql <span class="hljs-string">"'invalidReturn' must return an object."</span>
+        done()
+
+    describe <span class="hljs-string">'getRole'</span>,<span class="hljs-function"> -&gt;</span>
+      it <span class="hljs-string">'should require sessionId'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        <span class="hljs-property">@services</span>.getRole {}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+          should.exist err?.message, <span class="hljs-string">'expected error'</span>
+          err.message.should.eql <span class="hljs-string">"'getRole' requires 'sessionId' to be defined."</span>
+          err.should.include
+            <span class="hljs-attribute">reason</span>: <span class="hljs-string">'requiredField'</span>
+            <span class="hljs-attribute">fieldName</span>: <span class="hljs-string">'sessionId'</span>
+            <span class="hljs-attribute">serviceName</span>: <span class="hljs-string">'getRole'</span>
+            <span class="hljs-attribute">args</span>: {}
+          done()
+
+      it <span class="hljs-string">'should validate stringyness'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        <span class="hljs-property">@services</span>.sendEmail {<span class="hljs-attribute">email</span>: [], <span class="hljs-attribute">subject</span>: <span class="hljs-string">''</span>}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+          should.exist err?.message, <span class="hljs-string">'expected error'</span>
+          err.message.should.eql <span class="hljs-string">'email is not a string.'</span>
+          err.should.include
+            <span class="hljs-attribute">fieldName</span>: <span class="hljs-string">'email'</span>
+            <span class="hljs-attribute">value</span>: []
+            <span class="hljs-attribute">serviceName</span>: <span class="hljs-string">'sendEmail'</span>
+            <span class="hljs-attribute">args</span>: {<span class="hljs-attribute">email</span>: [], <span class="hljs-attribute">subject</span>: <span class="hljs-string">''</span>}
+            <span class="hljs-attribute">reason</span>: <span class="hljs-string">'invalidValue'</span>
+            <span class="hljs-attribute">requiredType</span>: <span class="hljs-string">'String'</span>
+            <span class="hljs-attribute">message</span>: <span class="hljs-string">'email is not a string.'</span>
+
+          done()
+
+      it <span class="hljs-string">'should validate sessionId'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        <span class="hljs-property">@services</span>.getRole {<span class="hljs-attribute">sessionId</span>: <span class="hljs-string">'foo'</span>}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+          should.exist err?.message, <span class="hljs-string">'expected error'</span>
+          err.message.should.eql <span class="hljs-string">"'getRole' requires 'sessionId' to be a valid 'SessionId'."</span>
+          <span class="hljs-keyword">for</span> field <span class="hljs-keyword">in</span> [<span class="hljs-string">'reason'</span>, <span class="hljs-string">'fieldName'</span>, <span class="hljs-string">'serviceName'</span>, <span class="hljs-string">'requiredType'</span>]
+            Object.keys(err).should.include field
+          done()
+
+      it <span class="hljs-string">'should pass valid arguments'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        <span class="hljs-property">@services</span>.getRole {<span class="hljs-attribute">sessionId</span>: <span class="hljs-string">'ab23ab23ab23ab23'</span>}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+          should.<span class="hljs-keyword">not</span>.exist err
+          should.exist result?.role, <span class="hljs-string">'expected result.role'</span>
+          result.role.should.eql <span class="hljs-string">'Supreme Commander'</span>
+          done()
+
+      it <span class="hljs-string">'should lookup accountId'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        <span class="hljs-property">@services</span>.getRole {<span class="hljs-attribute">sessionId</span>: <span class="hljs-string">'ab23ab23ab23ab23'</span>}, <span class="hljs-function"><span class="hljs-params">(err, result)</span> -&gt;</span>
+          should.<span class="hljs-keyword">not</span>.exist err
+          should.exist result?.accountId, <span class="hljs-string">'expected result.accountId'</span>
+          done()
+
+    describe <span class="hljs-string">'printFilters'</span>,<span class="hljs-function"> -&gt;</span>
+      it <span class="hljs-string">'should work'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        printout = printFilters <span class="hljs-property">@services</span>
+        <span class="hljs-built_in">console</span>.log printout
+        done()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>

@@ -5,3 +5,4 @@ node_modules/
 src/files/vendor/components-bootstrap
 src/files/vendor/jquery
 .docpad.db
+tmp/

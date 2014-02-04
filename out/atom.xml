@@ -3,7 +3,7 @@
   <title>Law</title>
   <link href="http://website.com/atom.xml" rel="self"/>
   <link href="http://website.com"/>
-  <updated>2014-02-03T21:05:26.109Z</updated>
+  <updated>2014-02-04T20:04:27.462Z</updated>
   <id>http://website.com</id>
   <author>
     <name>Your Name</name>
@@ -67,7 +67,7 @@
       &lt;hr&gt;
       &lt;footer&gt;
         &lt;div&gt;© TorchlightSoftware 2014&lt;/div&gt;
-        &lt;div style=&quot;font-style:italic; font-size: 12px&quot;&gt;This website was last updated at Mon Feb 03 2014 13:05:26 GMT-0800 (PST)&lt;/div&gt;
+        &lt;div style=&quot;font-style:italic; font-size: 12px&quot;&gt;This website was last updated at Tue Feb 04 2014 12:04:27 GMT-0800 (PST)&lt;/div&gt;
       &lt;/footer&gt;
     &lt;/div&gt;
     &lt;!-- Scripts--&gt;&lt;script &gt;(function(){

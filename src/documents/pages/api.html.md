@@ -1,15 +1,58 @@
 ---
 title: API
 layout: page
-pageOrder: 2
+pageOrder: 1
 ---
-## Definition formats
+<a name="contents"></a>
+## [Contents](#contents)
+-  [Usage](#usage)
+  -  [Initializing services](#initializing-services)
+-  [Definition formats](#definition-formats)
+  -  [Services](#services)
+  -  [Jargon](#jargon)
+  -  [Policy](#policy)
+-  [`law`](#law)
+  -  [`create`](#law.create)
+  -  [`load`](#law.load)
+  -  [`applyMiddleware`](#law.applyMiddleware)
+  -  [`applyPolicy`](#law.applyPolicy)
+  -  [`applyDependencies`](#law.applyDependencies)
+  -  [`printFilters`](#law.printFilters)
+  -  [`graph`](#law.graph)
+  -  [`errors`](#law.errors)
+
+<a name="usage"></a>
+## [Usage](#usage)
+<a name="initializing-services"></a>
+### [Initializing services](#a-basic-service)
+Here we will demonstrate how to define a basic Law service
+called `echo` which simply returns its input *if the arguments
+contain a well-formed argument called `sessionId`.*
+
+First, we need to create an object which maps *service names*
+to *service definitions*. The simplest possible way of doing this
+is as follows:
+```
+services =
+  echo: (args, next) ->
+    # The callback `next` has signature `(err, data)`.
+    # Given an object `arg` of named arguments and a callback `next`
+    # with signature `(err, data)`, simply return while calling
+    # `next` with a `null` first argument (meaning no error occurred).
+    next null, args
+```
+At this point, all we have is a function. We would then use `law.create`
+to take this
+
+<a name="definition-formats"></a>
+## [Definition formats](#definition-formats)
 Law primarily consumes and operates on three important data structures,
 which define services, application-specific types and validations ("jargon"),
 and the application of policies to the various services ("policy"). These
 are described below.
 
-### Services
+<a name="services"></a>
+### [Services](#services)
 Array of service definitions, which are objects
 of the form `{serviceName: serviceDef}`.
 
@@ -27,7 +70,8 @@ or an object of the form:
 }
 ```
 
-### Jargon
+<a name="jargon"></a>
+### [Jargon](#jargon)
 A "jargon" definition, which is an array of type definitions of the form:
 ```
 {
@@ -41,11 +85,14 @@ A "jargon" definition, which is an array of type definitions of the form:
 }
 ```
 
-### Policy
+<a name="policy"></a>
+### [Policy](#policy)
 
-## `law`
+<a name="law"></a>
+## [`law`](#law)
 
-### `create`
+<a name="law.create"></a>
+### [`create`](#law.create)
 #### Description
 This is a convenience method to wrap service definitions
 in a complete middleware stack. This is what you will want
@@ -70,8 +117,8 @@ An object of the form:
 Where `ServiceObject` is the function from the service definition, but
 endowed with validations and runtime dependency injection.
 
-
-### `load`
+<a name="law.create"></a>
+### [`load`](#law.load)
 #### Description
 Loads service definitions from a directory in the file system.
 Services are assumed to be defined in separate files.
@@ -91,8 +138,8 @@ Services are assumed to be defined in separate files.
   Where `serviceDefs` is an object mapping a `ServiceName` : `String` to
   the service definition exported by each discovered module in `folder`.
 
-<a name="applyMiddleware"></a>
-### [`applyMiddleware`](#applyMiddleware)
+<a name="law.applyMiddleware"></a>
+### [`applyMiddleware`](#law.applyMiddleware)
 #### Description
 Wraps services with access/lookup policy.
 
@@ -111,52 +158,60 @@ Wraps services with access/lookup policy.
 Where `ServiceObject` is the function from the service definition, but
 endowed with call-time validations defined by the jargon file.
 
-<a name="applyPolicy"></a>
-### [`applyPolicy`](#applyPolicy)
+<a name="law.applyPolicy"></a>
+### [`applyPolicy`](#law.applyPolicy)
 #### Description
 #### Accepts
 #### Returns
 
-### [`applyDependencies`](#applyDependencies)
+<a name="law.applyDependencies"></a>
+### [`applyDependencies`](#law.applyDependencies)
 #### Description
 #### Accepts
 #### Returns
 
-### [`printFilters`](#printFilters)
+<a name="law.printFilters"></a>
+### [`printFilters`](#law.printFilters)
 #### Description
 #### Accepts
 #### Returns
 
-### [`graph`](#graph)
+<a name="law.graph"></a>
+### [`graph`](#law.graph)
 #### Description
 
-### [`errors`](#errors)
-#### Description
 
-## `law.graph`
 
-### [`adjacentDependencies`](#adjacentDependencies)
-#### Description
-#### Accepts
-#### Returns
+<a name="law.graph"></a>
+## [`law.graph`](`graph`)
 
-### [`adjacencyRelation`](#adjacencyRelation)
+<a name="law.graph.adjacentDependencies"></a>
+### [`adjacentDependencies`](#law.graph.adjacentDependencies)
 #### Description
 #### Accepts
 #### Returns
 
-### [`connectedDependencies`](#connectedDependencies)
+<a name="law.graph.adjacencyRelation"></a>
+### [`adjacencyRelation`](#law.graph.adjacencyRelation)
 #### Description
 #### Accepts
 #### Returns
 
-### [`dotNotation`](#dotNotation)
+<a name="law.graph.connectedDependencies"></a>
+### [`connectedDependencies`](#law.graph.connectedDependencies)
 #### Description
 #### Accepts
 #### Returns
 
-## `law.errors`
-### Description
+<a name="law.graph.dotNotation"></a>
+### [`dotNotation`](#law.graph.dotNotation)
+#### Description
+#### Accepts
+#### Returns
+
+<a name="law.errors"></a>
+### [`errors`](#law.errors)
+#### Description
 
 Law provides standard subtypes of `Error`, enriched using the `tea-error`
 library (https://github.com/qualiancy/tea-error). This means a `properties`

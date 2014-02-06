@@ -1,0 +1,8 @@
+---
+title: Examples
+layout: docco
+pageOrder: 2
+---
+<div class="docco">
+<%= @partial("examples.html")  %>
+</div>

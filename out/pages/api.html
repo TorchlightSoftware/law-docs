@@ -1,127 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	<!-- Meta -->
-	<meta charset="utf-8" />
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
-		 More info: h5bp.com/i/378 -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-	<!-- Our site title and description -->
-	<title>API | Law</title>
-	<meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title." />
-	<meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website" />
-	<meta name="author" content="Torchlight Software" />
-
-	<!-- Output DocPad produced meta elements -->
-	<meta name="generator" content="DocPad v6.60.2" />
-
-	<!-- Mobile viewport optimized: h5bp.com/viewport -->
-	<meta name="viewport" content="width=device-width" />
-
-	<!-- Icons -->
-	<link rel="shortcut icon" href="images/icons/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icons/apple-touch-icon-144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icons/apple-touch-icon-114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/icons/apple-touch-icon-72-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" href="images/icons/apple-touch-icon-57-precomposed.png">
-
-	<!-- Shims: IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-		<script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	    <![endif]-->
-
-	<!-- Styles -->
-	<style >html.wait {
+    <!-- Meta-->
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>API | Law</title>
+    <meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title.">
+    <meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website">
+    <meta name="author" content="Your Name"><meta name="generator" content="DocPad v6.60.3" />
+    <meta name="viewport" content="width=device-width">
+    <!-- Icons-->
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
+    <!--[if lt IE 9]>
+    <script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Styles--><style >html.wait {
 	cursor: wait !important;
 	opacity: 0;
 	transition: opacity 0.5s ease;
-}</style><link  rel="stylesheet" href="/styles/twitter-bootstrap.css" /><link  rel="stylesheet" href="/styles/style.css" />
+}</style><link  rel="stylesheet" href="/vendor/prettify.css" /><link  rel="stylesheet" href="/vendor/components-bootstrap/css/bootstrap.css" /><link  rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-	<!-- Menu -->
-	<div class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="container">
-		<div class="navbar-header">
-		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		  </button>
-		  <a class="navbar-brand" href="/">Law</a>
-		</div>
-		<div class="navbar-collapse collapse">
-		  <ul class="nav navbar-nav">
-			
-			<li
-			   typeof="sioc:Page"
-			   about="/pages/about"
-			   class=""
-			   >
-			  <a href="/pages/about" property="dc:title">
-				About
-			  </a>
-			</li>
-			
-			<li
-			   typeof="sioc:Page"
-			   about="/pages/api"
-			   class="active"
-			   >
-			  <a href="/pages/api" property="dc:title">
-				API
-			  </a>
-			</li>
-			
-			<li
-			   typeof="sioc:Page"
-			   about="/pages/example"
-			   class=""
-			   >
-			  <a href="/pages/example" property="dc:title">
-				Example
-			  </a>
-			</li>
-			
-			<li
-			   typeof="sioc:Page"
-			   about="/pages/quickstart"
-			   class=""
-			   >
-			  <a href="/pages/quickstart" property="dc:title">
-				Quickstart
-			  </a>
-			</li>
-			
-			<li
-			   typeof="sioc:Page"
-			   about="/pages/tutorial"
-			   class=""
-			   >
-			  <a href="/pages/tutorial" property="dc:title">
-				Tutorial
-			  </a>
-			</li>
-			
-		  </ul>
-		</div><!--/.navbar-collapse -->
-	  </div>
-	</div>
-
-	<!-- Content -->
-	<div class="container">
-	  <!-- Content -->
-	  <section id="content" class="content">
-		<article id="page" class="page">
-	<h1>API</h1>
-	<div class="page-content"><h2 id="definition-formats">Definition formats</h2>
+    <!-- Markup-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header"><a href="/" class="navbar-brand">Welcome</a></div>
+        <ul class="nav navbar-nav">
+          <li typeof="sioc:Page" about="/pages/api" class="active"><a href="/pages/api" property="dc:title">API</a></li>
+          <li typeof="sioc:Page" about="/pages/about"><a href="/pages/about" property="dc:title">About</a></li>
+          <li typeof="sioc:Page" about="/pages/examples"><a href="/pages/examples" property="dc:title">Examples</a></li>
+          <li typeof="sioc:Page" about="/pages/example"><a href="/pages/example" property="dc:title">Example</a></li>
+          <li typeof="sioc:Page" about="/pages/quickstart"><a href="/pages/quickstart" property="dc:title">Quickstart</a></li>
+          <li typeof="sioc:Page" about="/pages/tutorials"><a href="/pages/tutorials" property="dc:title">Tutorials</a></li>
+          <li typeof="sioc:Page" about="/pages/tutorial"><a href="/pages/tutorial" property="dc:title">Tutorial</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <section id="content" class="content">
+<article id="page" class="page">
+  <h1>API</h1>
+  <div class="page-content"><p><a name="contents"></a></p>
+<h2 id="-contents-contents-"><a href="#contents">Contents</a></h2>
+<ul>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#initializing-services">Initializing services</a></li>
+</ul>
+</li>
+<li><a href="#definition-formats">Definition formats</a><ul>
+<li><a href="#services">Services</a></li>
+<li><a href="#jargon">Jargon</a></li>
+<li><a href="#policy">Policy</a></li>
+</ul>
+</li>
+<li><a href="#law"><code>law</code></a><ul>
+<li><a href="#law.create"><code>create</code></a></li>
+<li><a href="#law.load"><code>load</code></a></li>
+<li><a href="#law.applyMiddleware"><code>applyMiddleware</code></a></li>
+<li><a href="#law.applyPolicy"><code>applyPolicy</code></a></li>
+<li><a href="#law.applyDependencies"><code>applyDependencies</code></a></li>
+<li><a href="#law.printFilters"><code>printFilters</code></a></li>
+<li><a href="#law.graph"><code>graph</code></a></li>
+<li><a href="#law.errors"><code>errors</code></a></li>
+</ul>
+</li>
+</ul>
+<p><a name="usage"></a></p>
+<h2 id="-usage-usage-"><a href="#usage">Usage</a></h2>
+<p><a name="initializing-services"></a></p>
+<h3 id="-initializing-services-a-basic-service-"><a href="#a-basic-service">Initializing services</a></h3>
+<p>Here we will demonstrate how to define a basic Law service
+called <code>echo</code> which simply returns its input <em>if the arguments
+contain a well-formed argument called <code>sessionId</code>.</em></p>
+<p>First, we need to create an object which maps <em>service names</em>
+to <em>service definitions</em>. The simplest possible way of doing this
+is as follows:</p>
+<pre class="highlight"><code class="autohotkey">services =
+<span class="hljs-label">  echo:</span> (args, next) -&gt;
+    # The callback <span class="hljs-escape">`n</span>ext<span class="hljs-escape">` </span>has signature <span class="hljs-escape">`(</span>err, data)<span class="hljs-escape">`.</span>
+    # Given an object <span class="hljs-escape">`a</span>rg<span class="hljs-escape">` </span>of named arguments <span class="hljs-literal">and</span> <span class="hljs-literal">a</span> callback <span class="hljs-escape">`n</span>ext<span class="hljs-escape">`
+</span>    # with signature <span class="hljs-escape">`(</span>err, data)<span class="hljs-escape">`,</span> simply <span class="hljs-keyword">return</span> <span class="hljs-keyword">while</span> calling
+    # <span class="hljs-escape">`n</span>ext<span class="hljs-escape">` </span>with <span class="hljs-literal">a</span> <span class="hljs-escape">`n</span>ull<span class="hljs-escape">` </span>first argument (meaning no error occurred).
+    next null, args
+</code></pre><p>At this point, all we have is a function. We would then use <code>law.create</code>
+to take this</p>
+<p><a name="definition-formats"></a></p>
+<h2 id="-definition-formats-definition-formats-"><a href="#definition-formats">Definition formats</a></h2>
 <p>Law primarily consumes and operates on three important data structures,
 which define services, application-specific types and validations (&quot;jargon&quot;),
 and the application of policies to the various services (&quot;policy&quot;). These
 are described below.</p>
-<h3 id="services">Services</h3>
+<p><a name="services"></a></p>
+<h3 id="-services-services-"><a href="#services">Services</a></h3>
 <p>Array of service definitions, which are objects
 of the form <code>{serviceName: serviceDef}</code>.</p>
 <p>The <code>serviceDef</code> can either a function with signature <code>(args, callback)</code>,
@@ -135,7 +110,8 @@ or an object of the form:</p>
   <span class="hljs-comment"># Actual async function defining the service</span>
   service: (args, done) -&gt; <span class="hljs-keyword">...</span>
 }
-</code></pre><h3 id="jargon">Jargon</h3>
+</code></pre><p><a name="jargon"></a></p>
+<h3 id="-jargon-jargon-"><a href="#jargon">Jargon</a></h3>
 <p>A &quot;jargon&quot; definition, which is an array of type definitions of the form:</p>
 <pre class="highlight"><code class="fsharp">{
   # Name <span class="hljs-keyword">of</span> the <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">being</span> <span class="hljs-title">defined</span></span>
@@ -146,9 +122,12 @@ or an object of the form:</p>
 
   defaultArgs: ...
 }
-</span></code></pre><h3 id="policy">Policy</h3>
-<h2 id="-law-"><code>law</code></h2>
-<h3 id="-create-"><code>create</code></h3>
+</span></code></pre><p><a name="policy"></a></p>
+<h3 id="-policy-policy-"><a href="#policy">Policy</a></h3>
+<p><a name="law"></a></p>
+<h2 id="-law-law-"><a href="#law"><code>law</code></a></h2>
+<p><a name="law.create"></a></p>
+<h3 id="-create-law-create-"><a href="#law.create"><code>create</code></a></h3>
 <h4 id="description">Description</h4>
 <p>This is a convenience method to wrap service definitions
 in a complete middleware stack. This is what you will want
@@ -173,7 +152,8 @@ to use in most situations.</p>
 </span></span></span>}
 </code></pre><p>Where <code>ServiceObject</code> is the function from the service definition, but
 endowed with validations and runtime dependency injection.</p>
-<h3 id="-load-"><code>load</code></h3>
+<p><a name="law.create"></a></p>
+<h3 id="-load-law-load-"><a href="#law.load"><code>load</code></a></h3>
 <h4 id="description">Description</h4>
 <p>Loads service definitions from a directory in the file system.
 Services are assumed to be defined in separate files.</p>
@@ -193,8 +173,8 @@ Services are assumed to be defined in separate files.</p>
 the service definition exported by each discovered module in <code>folder</code>.</p>
 </li>
 </ul>
-<p><a name="applyMiddleware"></a></p>
-<h3 id="-applymiddleware-applymiddleware-"><a href="#applyMiddleware"><code>applyMiddleware</code></a></h3>
+<p><a name="law.applyMiddleware"></a></p>
+<h3 id="-applymiddleware-law-applymiddleware-"><a href="#law.applyMiddleware"><code>applyMiddleware</code></a></h3>
 <h4 id="description">Description</h4>
 <p>Wraps services with access/lookup policy.</p>
 <h4 id="accepts">Accepts</h4>
@@ -212,42 +192,49 @@ the service definition exported by each discovered module in <code>folder</code>
 endowed with call-time validations defined by the jargon file.</p>
 </li>
 </ul>
-<p><a name="applyPolicy"></a></p>
-<h3 id="-applypolicy-applypolicy-"><a href="#applyPolicy"><code>applyPolicy</code></a></h3>
+<p><a name="law.applyPolicy"></a></p>
+<h3 id="-applypolicy-law-applypolicy-"><a href="#law.applyPolicy"><code>applyPolicy</code></a></h3>
 <h4 id="description">Description</h4>
 <h4 id="accepts">Accepts</h4>
 <h4 id="returns">Returns</h4>
-<h3 id="-applydependencies-applydependencies-"><a href="#applyDependencies"><code>applyDependencies</code></a></h3>
+<p><a name="law.applyDependencies"></a></p>
+<h3 id="-applydependencies-law-applydependencies-"><a href="#law.applyDependencies"><code>applyDependencies</code></a></h3>
 <h4 id="description">Description</h4>
 <h4 id="accepts">Accepts</h4>
 <h4 id="returns">Returns</h4>
-<h3 id="-printfilters-printfilters-"><a href="#printFilters"><code>printFilters</code></a></h3>
+<p><a name="law.printFilters"></a></p>
+<h3 id="-printfilters-law-printfilters-"><a href="#law.printFilters"><code>printFilters</code></a></h3>
 <h4 id="description">Description</h4>
 <h4 id="accepts">Accepts</h4>
 <h4 id="returns">Returns</h4>
-<h3 id="-graph-graph-"><a href="#graph"><code>graph</code></a></h3>
+<p><a name="law.graph"></a></p>
+<h3 id="-graph-law-graph-"><a href="#law.graph"><code>graph</code></a></h3>
 <h4 id="description">Description</h4>
-<h3 id="-errors-errors-"><a href="#errors"><code>errors</code></a></h3>
-<h4 id="description">Description</h4>
-<h2 id="-law-graph-"><code>law.graph</code></h2>
-<h3 id="-adjacentdependencies-adjacentdependencies-"><a href="#adjacentDependencies"><code>adjacentDependencies</code></a></h3>
-<h4 id="description">Description</h4>
-<h4 id="accepts">Accepts</h4>
-<h4 id="returns">Returns</h4>
-<h3 id="-adjacencyrelation-adjacencyrelation-"><a href="#adjacencyRelation"><code>adjacencyRelation</code></a></h3>
+<p><a name="law.graph"></a></p>
+<h2 id="-law-graph-graph-"><a href="`graph`"><code>law.graph</code></a></h2>
+<p><a name="law.graph.adjacentDependencies"></a></p>
+<h3 id="-adjacentdependencies-law-graph-adjacentdependencies-"><a href="#law.graph.adjacentDependencies"><code>adjacentDependencies</code></a></h3>
 <h4 id="description">Description</h4>
 <h4 id="accepts">Accepts</h4>
 <h4 id="returns">Returns</h4>
-<h3 id="-connecteddependencies-connecteddependencies-"><a href="#connectedDependencies"><code>connectedDependencies</code></a></h3>
+<p><a name="law.graph.adjacencyRelation"></a></p>
+<h3 id="-adjacencyrelation-law-graph-adjacencyrelation-"><a href="#law.graph.adjacencyRelation"><code>adjacencyRelation</code></a></h3>
 <h4 id="description">Description</h4>
 <h4 id="accepts">Accepts</h4>
 <h4 id="returns">Returns</h4>
-<h3 id="-dotnotation-dotnotation-"><a href="#dotNotation"><code>dotNotation</code></a></h3>
+<p><a name="law.graph.connectedDependencies"></a></p>
+<h3 id="-connecteddependencies-law-graph-connecteddependencies-"><a href="#law.graph.connectedDependencies"><code>connectedDependencies</code></a></h3>
 <h4 id="description">Description</h4>
 <h4 id="accepts">Accepts</h4>
 <h4 id="returns">Returns</h4>
-<h2 id="-law-errors-"><code>law.errors</code></h2>
-<h3 id="description">Description</h3>
+<p><a name="law.graph.dotNotation"></a></p>
+<h3 id="-dotnotation-law-graph-dotnotation-"><a href="#law.graph.dotNotation"><code>dotNotation</code></a></h3>
+<h4 id="description">Description</h4>
+<h4 id="accepts">Accepts</h4>
+<h4 id="returns">Returns</h4>
+<p><a name="law.errors"></a></p>
+<h3 id="-errors-law-errors-"><a href="#law.errors"><code>errors</code></a></h3>
+<h4 id="description">Description</h4>
 <p>Law provides standard subtypes of <code>Error</code>, enriched using the <code>tea-error</code>
 library (<a href="https://github.com/qualiancy/tea-error">https://github.com/qualiancy/tea-error</a>). This means a <code>properties</code>
 object can be attached to the <code>Error</code> instance upon construction, as well
@@ -306,17 +293,14 @@ resolver configuration doesn&#39;t define a way to resolve dependencies in a
 <code>services</code> category, this error would be thrown. Occurs at setup time, when
 resolving dependencies.</p>
 </div>
-</article>
-	  </section>
-
-	  <!-- Footer -->
-	  <footer>
-		<p class="pull-left">&copy; Torchlight Software 2014</p>
-	  </footer>
-	</div><!-- /container -->
-
-	<!-- Scripts -->
-	<script >(function(){
+</article></section>
+      <hr>
+      <footer>
+        <div>© TorchlightSoftware 2014</div>
+        <div style="font-style:italic; font-size: 12px">This website was last updated at Wed Feb 05 2014 18:01:53 GMT-0700 (MST)</div>
+      </footer>
+    </div>
+    <!-- Scripts--><script >(function(){
 	/* Did we just livereload? */
 var log = !!(localStorage && console && console.log && true);
 if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
@@ -361,6 +345,6 @@ var inject = function(){
 	} else {
 		inject();
 	}
-})();</script><script defer="defer"  src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script defer="defer"  src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script><script defer="defer"  src="/vendor/twitter-bootstrap/dist/js/bootstrap.min.js"></script><script defer="defer"  src="/scripts/script.js"></script>
+})();</script><script defer="defer"  src="/vendor/prettify.js"></script><script defer="defer"  src="/vendor/jquery/jquery.js"></script><script defer="defer"  src="/vendor/components-bootstrap/js/bootstrap.js"></script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
   </body>
 </html>

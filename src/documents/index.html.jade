@@ -1,0 +1,30 @@
+--- yaml
+layout: 'default'
+title: 'Law'
+---
+
+// Main hero unit for a primary marketing message or call to action.
+.jumbotron
+  h1 Law
+  p: :markdown
+    Law is a middleware layer for tying together:
+
+    1. A set of services
+    2. Argument validations and lookups
+    3. An access control policy
+
+// Example row of columns.
+.row
+  .col-md-6
+    h2 Domain-driven
+    p Law lets you write an API in the language of your problem.
+    p Pull argument validation out of your services and into a "jargon" file.
+    p: a.btn.btn-default(href="https://github.com/TorchlightSoftware/law") Visit Website
+  .col-md-6
+    h2 Works with what you work with
+    p Law services are just functions, and can be exposed via REST, websockets, or any other transport.
+    p Check out the Connect middleware for exposing your Law services via HTTP!
+    p: a.btn.btn-default(href="https://github.com/TorchlightSoftware/law-connect") Law-Connect
+
+.something
+  != partial('intro.html')

@@ -1,120 +1,18 @@
 # Law
 
-## Less strictly constitutional and more strictly awesome.
+## Overview
 
-This project was motivated by the desire to take a lot of validation and error handling logic out of our services, and put it in a declarative layer.
+### Use Case
+You have a service-oriented architecture, implemented as a collection of related functions,
+some interdependent, meant to collectively operate a shared domain of data types.
 
-Law is framework and transport agnostic.  Its focus is on enforcing the business rules specific to your application.  In our applications, we have connected these services to REST, websockets, and a programmatic API through the use of adapters.  I present below an example that should help to tie in as connect middleware.  Hopefully there will be enough information here to make this a useful tool for those interested.  If you're having trouble getting things working, let me know.
+Law is a middleware layer for tying together:
 
-![Build Status](https://api.travis-ci.org/TorchlightSoftware/law.png)
+1. A set of services
+2. Argument validations and lookups
+3. An access control policy
 
-## Credit/Inspiration
-
-Our approach to policies was inspired by the filter lifecycle from Ruby on Rails.  The argument validations take some ideas from Design By Contract, e.g. preconditions.  Applying validators to default names was suggested by @JosephJNK.  I am interested to see if this will be conducive to creating a 'ubiquitous language' as described by Eric Evans in Domain Driven Design.
-
-The separation of Express and Connect has influenced our decision to do the same.  I think that while frameworks can lead to gains in terms of productivity, a library has greater potential for re-use.
-
-Many thanks to @wearefractal (@amurray, @contra), @JosephJNK, and @uberscientist for conversations and collaboration on application design with functional and declarative programming.
-
-## Application Files
-
-Following are some possible uses of Law.  Further options are described in the [extended documentation].
-
-Here's an example service.  Law will construct a function from this which will enforce the required/optional parameters.  Both optional and required parameters will run any associated validations.
-
-### getRole.coffee
-```coffee-script
-module.exports =
-  required: ['sessionId']
-  optional: ['specialKey']
-  service: ({sessionId, specialKey}, done) ->
-
-    # check the sessionId against the database
-
-    done null, {role: 'Supreme Commander'}
-```
-
-Here's some example argument types, and their validations.  Law makes these available in the definition of services.  You can think of them as the language that a particular set of services share.  Whenever these names are used in service arguments, their meanings will be enforced by the rules you set here.
-
-### jargon.coffee
-```coffee-script
-redisId = /[a-z0-9]{16}/
-mongoId = /[a-f0-9]{24}/
-
-module.exports = [
-    typeName: 'String'
-    validation: (arg, assert) ->
-      assert typeof arg is 'string'
-    defaultArgs: ['email', 'password', 'sessionId', 'userId']
-  ,
-    typeName: 'SessionId'
-    validation: (arg, assert) ->
-      assert arg.match redisId
-    defaultArgs: ['sessionId']
-  ,
-    typeName: 'MongoId'
-    validation: (arg, assert) ->
-      assert arg.match mongoId
-    defaultArgs: ['userId']
-]
-```
-
-Here's an example policy file.  The filters named here are defined as regular services, but they are run in a slightly different context.  If they return an error, the filter stack stops and returns it, otherwise their results are merged into the argument stream and passed on to the next service in the stack.
-
-### policy.coffee
-```coffee-script
-module.exports =
-  filterPrefix: 'filters'
-  rules:
-    [
-      {
-        filters: ['isLoggedIn']
-        except: [
-          'getRole'
-          'login'
-        ]
-      }
-
-      {
-        filters: ['setIsOnline']
-        only: ['dashboard']
-      }
-    ]
-```
-
-## Dependencies
-
-Since version 0.1.1 Law supports declarative dependency injection.  The two built in loaders are:
-
-* services: call sibling services
-* lib: a shortcut to require
-
-This lets us do static analysis of dependencies, and can be used as a way of making side effects explicit.
-
-```coffee-script
-module.exports =
-  required: ['sessionId']
-  dependencies:
-    services: ['aHelperService']
-    lib: ['lodash']
-
-  service: (args, done, {services, require}) ->
-    args = lib.lodash.merge {myOpt: 1}, args
-    services.aHelperService args, done
-```
-
-To add more loaders, just plug in a resolvers object when you load your services:
-
-```coffee-script
-resolvers = {
-  myLoader: (name) -> loadIt(name)
-}
-
-law.create {services, jargon, policy, resolvers}
-```
-
-
-## Value
+### Value
 
 Through this approach we accomplish the following:
 
@@ -122,111 +20,98 @@ Through this approach we accomplish the following:
 2. Access control is described in one place
 3. The preconditions for services are declarative
 
-Because the structure binding these pieces together is declarative, we can easily make it visible for analysis and troubleshooting.  Here is a printout from the sample application.
+## Rationale
 
-```coffee-script
-#> console.log law.printFilters services
+### Problems live in domains
 
-{ dashboard: [ 'filters/isLoggedIn', 'filters/setIsOnline', 'dashboard' ],
-  'filters/isLoggedIn':
-   [ 'sessionId.exists',
-     'sessionId.isValid(SessionId)',
-     'filters/isLoggedIn' ],
-  'filters/setIsOnline': [ 'filters/setIsOnline' ],
-  getRole: [ 'sessionId.exists', 'sessionId.isValid(SessionId)', 'getRole' ],
-  login: [ 'login' ] }
-```
+We build applications to solve problems. These problems don't live in a vacuum.
+They exist in *domains*, with their own concepts, rules, and processes.
+When we write software, we often need to *model* and *simulate* these domains.
+We do this so we can consistently extend, choreograph, and automate their processes.
 
-## Getting Started
+These models are described via *computational* language, like JavaScript.
+Our challenge in program and API design is then to make this computational model
+faithful to the rules of the domain. Many strategies for doing this come from the
+paradigm of object-orientation: we want to model postal service, so we create
+`Mailman`, `Letter`, and `Address` classes with a `deliver(<Letter>, <Address>)` method.
+However, the invariants and rules that define valid behavior for these data are
+often dependent on runtime state, or easily scattered throughout a codebase.
+If the validations logic is attached to the object implementation, it can be hard
+to compose this logic with the broader application lifecycle.
 
-```bash
-npm install law
-```
+### We need to organize our machinery
 
-Before you can start using the facilities mentioned above in your app, you'll need to wire some things up.  This being a library intended to support a not-yet-released framework, no assumptions are made about the locations of your files.  You'll need something like the following to initialize and connect the services when your application starts.
+In solving problems, we build a lot of scaffolding and moving parts. We need to
+do this in a way that is maintainable and extensible. The strategies for writing
+a manageable codebase include decomposition, encapsulation, and separating concerns.
+But these *engineering principles* are connected to implementation details, and can be at
+odds with faithful representations of the problem domain we are working in. Real
+problems often have cross-cutting concerns, which can be hard to maintainably *and* faithfully
+represent.
 
-### initLaw.coffee
-```coffee-script
-should = require 'should'
-{join} = require 'path'
+### JavaScript's types cannot directly encode many constraints
 
-# lib stuff
-connect = require 'connect'
-{load, create, printFilters} = require 'law'
+JavaScript's typing regime is incredibly flexible, but at a cost. Suppose we create
+a constructor for a class representing an email address. This task might be more complex
+than it sounds. Ultimately, what we want is a subset of all possible instances of
+`String`. We can make instances of this class correct by construction by *validating*
+the constructor arguments.
 
-# files from the sample app
-serviceLocation = join __dirname, '../sample/app/domain/auth/services'
-argTypes = require '../sample/app/domain/auth/jargon'
-policy = require '../sample/app/domain/auth/policy'
+But, though methods on an object have at least self-knowledge, functions generally must
+still must validate all of their explicit inputs. This can lead to a codebase whose
+function bodies are littered with guards and validation calls. The problem is only
+exacerbated when we attempt ad hoc polymorphism. Furthermore, we may have validations
+which depend entirely upon runtime state. Such validations frequently end up as conditional
+test-and-dispatch logic embedded in the cracks of a codebase.
 
-services = load serviceLocation
-services = create {services, jargon, policy}
-console.log "I am the law:", printFilters services
-```
+Law is an effort to make our domain modeling readable, extensible, and semantic.
 
-This gives you a hash of {serviceName, serviceDef}.  Now if you wanted to use that, say as connect middleware, you could write up some basic routing like so.
+## Architectural Role
 
-### connectAdapter.coffee
-```coffee-script
-app = connect()
-app.use (req, res) ->
+Law is a middleware library for building web services. Its goal is to let you write composable
+services that contain only business logic, with error handling and preconditions expressed
+*declaratively* and enforced *outside of* a given service's definition.
 
-  # find service to call, or return 404
-  pathParts = req._parsedUrl.pathname.split('/').remove ''
-  resourceName = pathParts[0]
-  service = resourceMap[resourceName] or ->
-    res.writeHead 404
-    res.end()
+In any service-oriented architecture in which you expose functions via an API, Law lets
+you factor out preconditions into a declarative layer. Additionally, it lets you write
+your services such that, at call time, the arguments satisfy arbitrary *runtime* validations,
+not just *typing* validations. For example, you can ensure that a string argument representing
+a session token is not only well-formed, but corresponds to an *active* session. The
+correspondence precondition likely appears in many services.
 
-  # call service
-  service {
-      url: req.url
-      headers: req.headers
-      query: req.query || {}
-      pathParts: pathParts
-      cookies: req.cookies
-    }, res
+Law gives you 3 concepts to use in structuring your application:
 
-```
+1. Service definitions
+2. Jargon
+3. Policy
 
-## Further Reading
+*Service definitions* are the functions that contain domain logic. They are meant to be small, testable,
+and composable. They can share and reuse the same data concepts, transformations, and expectations.
+The *Jargon* and *Policy* files let you pull the repetitious noise of assumption-validation *out*
+of the service bodies and into a single description of a service's expectations.
 
-You can find [extended documentation here].
+The *Jargon* file is where you declare these shared data concepts. Different static and
+runtime expectations can be written once, here, and referred to by services.
 
-## Project Status
+The *Policy* file is where broader preconditions (such as access control) can be declared.
+This lets you record the assumptions of your services in one place, explicitly, and easily
+modified as your application grows.
 
-This should be considered an alpha release.  The API may change.  It was developed within an active project with the intent to only build the features which give us a clear advantage.  Additional features will be added as required for the parent project.
+Wired together, these three objects provide an object mapping service names to "smart" functions,
+which can be exposed through any mechanism you like--HTTP, RPC, the command line--any way
+you can expose an API.
 
-Discussion/feedback is welcome.  You can reach me on twitter @qbitmage.
+## Inspiration and Foundations
+Our approach to policies was inspired by the filter lifecycle from Ruby on Rails.
+The argument validations take some ideas from Design By Contract, e.g.
+preconditions. Applying validators to default names was suggested by @JosephJNK.
+I am interested to see if this will be conducive to creating a 'ubiquitous
+language' as described by Eric Evans in Domain Driven Design.
 
-Future goals/possibilities:
+The separation of Express and Connect has influenced our decision to do the same.
+I think that while frameworks can lead to gains in terms of productivity, a
+library has greater potential for re-use.
 
-1. Unit tests for each component file.
-2. Standard adapters for websocket RPC, REST
-3. Enforce post-conditions?
-4. Development of a contract-driven web framework.
-
-## The Fine Print
-
-(MIT License)
-
-Copyright (c) 2013 Torchlight Software <info@torchlightsoftware.com>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Many thanks to @wearefractal (@amurray, @contra), @JosephJNK, and @uberscientist
+for conversations and collaboration on application design with functional and
+declarative programming.

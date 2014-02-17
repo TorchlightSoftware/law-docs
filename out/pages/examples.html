@@ -8,7 +8,7 @@
     <title>Examples | Law</title>
     <meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title.">
     <meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website">
-    <meta name="author" content="Your Name"><meta name="generator" content="DocPad v6.60.3" />
+    <meta name="author" content="Your Name"><meta name="generator" content="DocPad v6.63.3" />
     <meta name="viewport" content="width=device-width">
     <!-- Icons-->
     <link rel="shortcut icon" href="/ico/favicon.ico">
@@ -32,12 +32,8 @@
         <div class="navbar-header"><a href="/" class="navbar-brand">Welcome</a></div>
         <ul class="nav navbar-nav">
           <li typeof="sioc:Page" about="/pages/api"><a href="/pages/api" property="dc:title">API</a></li>
-          <li typeof="sioc:Page" about="/pages/about"><a href="/pages/about" property="dc:title">About</a></li>
           <li typeof="sioc:Page" about="/pages/examples" class="active"><a href="/pages/examples" property="dc:title">Examples</a></li>
-          <li typeof="sioc:Page" about="/pages/example"><a href="/pages/example" property="dc:title">Example</a></li>
-          <li typeof="sioc:Page" about="/pages/quickstart"><a href="/pages/quickstart" property="dc:title">Quickstart</a></li>
           <li typeof="sioc:Page" about="/pages/tutorials"><a href="/pages/tutorials" property="dc:title">Tutorials</a></li>
-          <li typeof="sioc:Page" about="/pages/tutorial"><a href="/pages/tutorial" property="dc:title">Tutorial</a></li>
         </ul>
       </div>
     </nav>
@@ -65,7 +61,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'>should = <span class="hljs-built_in">require</span> <span class="hljs-string">'should'</span>
+            <div class="content"><div class='highlight'><pre>should = <span class="hljs-built_in">require</span> <span class="hljs-string">'should'</span>
 law = <span class="hljs-built_in">require</span> <span class="hljs-string">'..'</span>
 
 
@@ -81,7 +77,7 @@ law = <span class="hljs-built_in">require</span> <span class="hljs-string">'..'<
       next()
 
 
-describe <span class="hljs-string">'Public API'</span>,<span class="hljs-function"> -&gt;</span></div></div>
+describe <span class="hljs-string">'Public API'</span>,<span class="hljs-function"> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -113,9 +109,9 @@ describe <span class="hljs-string">'Public API'</span>,<span class="hljs-functio
 
             </div>
             
-            <div class="content"><div class='highlight'>  describe <span class="hljs-string">'create'</span>,<span class="hljs-function"> -&gt;</span>
+            <div class="content"><div class='highlight'><pre>  describe <span class="hljs-string">'create'</span>,<span class="hljs-function"> -&gt;</span>
 
-    it <span class="hljs-string">'should work with a simple definition'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></div></div>
+    it <span class="hljs-string">'should work with a simple definition'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -132,8 +128,8 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      basicServices =
-        <span class="hljs-attribute">doF</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span></div></div>
+            <div class="content"><div class='highlight'><pre>      basicServices =
+        <span class="hljs-attribute">doF</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -148,7 +144,7 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>          should.exist args</div></div>
+            <div class="content"><div class='highlight'><pre>          should.exist args</pre></div></div>
             
         </li>
         
@@ -163,9 +159,9 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>          args.should.be.an.instanceOf Object
+            <div class="content"><div class='highlight'><pre>          args.should.be.an.instanceOf Object
 
-          next()</div></div>
+          next()</pre></div></div>
             
         </li>
         
@@ -180,7 +176,7 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services = law.create {<span class="hljs-attribute">services</span>: basicServices}</div></div>
+            <div class="content"><div class='highlight'><pre>      services = law.create {<span class="hljs-attribute">services</span>: basicServices}</pre></div></div>
             
         </li>
         
@@ -195,8 +191,8 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      should.exist services
-      should.exist services.doF</div></div>
+            <div class="content"><div class='highlight'><pre>      should.exist services
+      should.exist services.doF</pre></div></div>
             
         </li>
         
@@ -211,7 +207,7 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF.should.be.an.instanceOf Function</div></div>
+            <div class="content"><div class='highlight'><pre>      services.doF.should.be.an.instanceOf Function</pre></div></div>
             
         </li>
         
@@ -227,12 +223,12 @@ were processed as a Law service</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF.should.have.keys [
+            <div class="content"><div class='highlight'><pre>      services.doF.should.have.keys [
         <span class="hljs-string">'serviceName'</span>
         <span class="hljs-string">'callStack'</span>
         <span class="hljs-string">'dependencies'</span>
         <span class="hljs-string">'prepend'</span>
-      ]</div></div>
+      ]</pre></div></div>
             
         </li>
         
@@ -248,9 +244,9 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF <span class="hljs-literal">null</span>, done
+            <div class="content"><div class='highlight'><pre>      services.doF <span class="hljs-literal">null</span>, done
 
-    it <span class="hljs-string">'should work with a dependent service'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></div></div>
+    it <span class="hljs-string">'should work with a dependent service'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -265,7 +261,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      complexServices =</div></div>
+            <div class="content"><div class='highlight'><pre>      complexServices =</pre></div></div>
             
         </li>
         
@@ -280,8 +276,8 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>        <span class="hljs-attribute">doF</span>:
-          <span class="hljs-attribute">service</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span> next()</div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-attribute">doF</span>:
+          <span class="hljs-attribute">service</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span> next()</pre></div></div>
             
         </li>
         
@@ -296,8 +292,8 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>        <span class="hljs-attribute">doG</span>:
-          <span class="hljs-attribute">dependencies</span>:</div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-attribute">doG</span>:
+          <span class="hljs-attribute">dependencies</span>:</pre></div></div>
             
         </li>
         
@@ -312,8 +308,8 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            <span class="hljs-attribute">services</span>: [<span class="hljs-string">'doF'</span>]
-          <span class="hljs-attribute">service</span>: <span class="hljs-function"><span class="hljs-params">(args, next, deps)</span> -&gt;</span></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-attribute">services</span>: [<span class="hljs-string">'doF'</span>]
+          <span class="hljs-attribute">service</span>: <span class="hljs-function"><span class="hljs-params">(args, next, deps)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -328,7 +324,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            should.exist args</div></div>
+            <div class="content"><div class='highlight'><pre>            should.exist args</pre></div></div>
             
         </li>
         
@@ -343,7 +339,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            args.should.be.an.instanceOf Object</div></div>
+            <div class="content"><div class='highlight'><pre>            args.should.be.an.instanceOf Object</pre></div></div>
             
         </li>
         
@@ -358,7 +354,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            should.exist deps</div></div>
+            <div class="content"><div class='highlight'><pre>            should.exist deps</pre></div></div>
             
         </li>
         
@@ -373,7 +369,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            should.exist deps.services</div></div>
+            <div class="content"><div class='highlight'><pre>            should.exist deps.services</pre></div></div>
             
         </li>
         
@@ -388,7 +384,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            should.exist deps.services.doF</div></div>
+            <div class="content"><div class='highlight'><pre>            should.exist deps.services.doF</pre></div></div>
             
         </li>
         
@@ -403,7 +399,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>            deps.services.doF next</div></div>
+            <div class="content"><div class='highlight'><pre>            deps.services.doF next</pre></div></div>
             
         </li>
         
@@ -418,7 +414,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services = law.create {<span class="hljs-attribute">services</span>: complexServices}</div></div>
+            <div class="content"><div class='highlight'><pre>      services = law.create {<span class="hljs-attribute">services</span>: complexServices}</pre></div></div>
             
         </li>
         
@@ -433,10 +429,10 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      should.exist services
+            <div class="content"><div class='highlight'><pre>      should.exist services
       services.should.have.keys <span class="hljs-string">'doF'</span>, <span class="hljs-string">'doG'</span>
 
-      <span class="hljs-keyword">for</span> name <span class="hljs-keyword">of</span> services</div></div>
+      <span class="hljs-keyword">for</span> name <span class="hljs-keyword">of</span> services</pre></div></div>
             
         </li>
         
@@ -451,7 +447,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>        services[name].should.be.an.instanceOf Function</div></div>
+            <div class="content"><div class='highlight'><pre>        services[name].should.be.an.instanceOf Function</pre></div></div>
             
         </li>
         
@@ -467,12 +463,12 @@ were processed as a Law service</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>        services[name].should.have.keys [
+            <div class="content"><div class='highlight'><pre>        services[name].should.have.keys [
           <span class="hljs-string">'serviceName'</span>
           <span class="hljs-string">'callStack'</span>
           <span class="hljs-string">'dependencies'</span>
           <span class="hljs-string">'prepend'</span>
-        ]</div></div>
+        ]</pre></div></div>
             
         </li>
         
@@ -488,9 +484,9 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doG <span class="hljs-literal">null</span>, done
+            <div class="content"><div class='highlight'><pre>      services.doG <span class="hljs-literal">null</span>, done
 
-    it <span class="hljs-string">'should work with a required argument'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></div></div>
+    it <span class="hljs-string">'should work with a required argument'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -505,7 +501,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      jargon = [</div></div>
+            <div class="content"><div class='highlight'><pre>      jargon = [</pre></div></div>
             
         </li>
         
@@ -520,12 +516,12 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>        <span class="hljs-attribute">typeName</span>: <span class="hljs-string">'abc'</span>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-attribute">typeName</span>: <span class="hljs-string">'abc'</span>
         <span class="hljs-attribute">validation</span>: <span class="hljs-function"><span class="hljs-params">(arg, assert)</span> -&gt;</span>
           {abc} = args
           assert abc == <span class="hljs-string">'abc'</span>
         <span class="hljs-attribute">defaultArgs</span>: []
-      ]</div></div>
+      ]</pre></div></div>
             
         </li>
         
@@ -541,14 +537,14 @@ but verify that it received such an argument</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      serviceDefs =
+            <div class="content"><div class='highlight'><pre>      serviceDefs =
         <span class="hljs-attribute">doF</span>:
           <span class="hljs-attribute">required</span>: [<span class="hljs-string">'abc'</span>]
           <span class="hljs-attribute">service</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span>
             {abc} = args
             should.exist abc
             abc.should.eql <span class="hljs-string">'abc'</span>
-            next()</div></div>
+            next()</pre></div></div>
             
         </li>
         
@@ -563,11 +559,11 @@ but verify that it received such an argument</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services = law.create {
+            <div class="content"><div class='highlight'><pre>      services = law.create {
         <span class="hljs-attribute">services</span>: serviceDefs
         <span class="hljs-attribute">jargon</span>: jargon
       }
-      should.exist services</div></div>
+      should.exist services</pre></div></div>
             
         </li>
         
@@ -582,7 +578,7 @@ but verify that it received such an argument</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF {<span class="hljs-attribute">abc</span>: <span class="hljs-string">'abc'</span>}, done</div></div>
+            <div class="content"><div class='highlight'><pre>      services.doF {<span class="hljs-attribute">abc</span>: <span class="hljs-string">'abc'</span>}, done</pre></div></div>
             
         </li>
         
@@ -602,8 +598,8 @@ but verify that it received such an argument</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>  describe <span class="hljs-string">'applyMiddleware'</span>,<span class="hljs-function"> -&gt;</span>
-    beforeEach<span class="hljs-function"> -&gt;</span></div></div>
+            <div class="content"><div class='highlight'><pre>  describe <span class="hljs-string">'applyMiddleware'</span>,<span class="hljs-function"> -&gt;</span>
+    beforeEach<span class="hljs-function"> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -620,8 +616,8 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      <span class="hljs-property">@serviceDefs</span> =
-        <span class="hljs-attribute">doF</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-property">@serviceDefs</span> =
+        <span class="hljs-attribute">doF</span>: <span class="hljs-function"><span class="hljs-params">(args, next)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -636,7 +632,7 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>          should.exist args</div></div>
+            <div class="content"><div class='highlight'><pre>          should.exist args</pre></div></div>
             
         </li>
         
@@ -651,11 +647,11 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>          args.should.be.an.instanceOf Object
+            <div class="content"><div class='highlight'><pre>          args.should.be.an.instanceOf Object
 
           next()
 
-    it <span class="hljs-string">'should process service definitions into functions without a jargon def'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></div></div>
+    it <span class="hljs-string">'should process service definitions into functions without a jargon def'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -670,7 +666,7 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services = law.applyMiddleware <span class="hljs-property">@serviceDefs</span></div></div>
+            <div class="content"><div class='highlight'><pre>      services = law.applyMiddleware <span class="hljs-property">@serviceDefs</span></pre></div></div>
             
         </li>
         
@@ -685,8 +681,8 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      should.exist services
-      should.exist services.doF</div></div>
+            <div class="content"><div class='highlight'><pre>      should.exist services
+      should.exist services.doF</pre></div></div>
             
         </li>
         
@@ -701,7 +697,7 @@ as a function of the signature (Object, Function)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF.should.be.an.instanceOf Function</div></div>
+            <div class="content"><div class='highlight'><pre>      services.doF.should.be.an.instanceOf Function</pre></div></div>
             
         </li>
         
@@ -717,12 +713,12 @@ were processed as a Law service</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF.should.have.keys [
+            <div class="content"><div class='highlight'><pre>      services.doF.should.have.keys [
         <span class="hljs-string">'serviceName'</span>
         <span class="hljs-string">'callStack'</span>
         <span class="hljs-string">'dependencies'</span>
         <span class="hljs-string">'prepend'</span>
-      ]</div></div>
+      ]</pre></div></div>
             
         </li>
         
@@ -738,9 +734,9 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF <span class="hljs-literal">null</span>, done
+            <div class="content"><div class='highlight'><pre>      services.doF <span class="hljs-literal">null</span>, done
 
-    it <span class="hljs-string">'should process service definitions into functions with a jargon def'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></div></div>
+    it <span class="hljs-string">'should process service definitions into functions with a jargon def'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -755,7 +751,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services = law.applyMiddleware <span class="hljs-property">@serviceDefs</span></div></div>
+            <div class="content"><div class='highlight'><pre>      services = law.applyMiddleware <span class="hljs-property">@serviceDefs</span></pre></div></div>
             
         </li>
         
@@ -770,8 +766,8 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      should.exist services
-      should.exist services.doF</div></div>
+            <div class="content"><div class='highlight'><pre>      should.exist services
+      should.exist services.doF</pre></div></div>
             
         </li>
         
@@ -786,7 +782,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF.should.be.an.instanceOf Function</div></div>
+            <div class="content"><div class='highlight'><pre>      services.doF.should.be.an.instanceOf Function</pre></div></div>
             
         </li>
         
@@ -802,12 +798,12 @@ were processed as a Law service</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF.should.have.keys [
+            <div class="content"><div class='highlight'><pre>      services.doF.should.have.keys [
         <span class="hljs-string">'serviceName'</span>
         <span class="hljs-string">'callStack'</span>
         <span class="hljs-string">'dependencies'</span>
         <span class="hljs-string">'prepend'</span>
-      ]</div></div>
+      ]</pre></div></div>
             
         </li>
         
@@ -823,7 +819,7 @@ it passes its assertions and terminate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'>      services.doF <span class="hljs-literal">null</span>, done</div></div>
+            <div class="content"><div class='highlight'><pre>      services.doF <span class="hljs-literal">null</span>, done</pre></div></div>
             
         </li>
         
@@ -861,7 +857,7 @@ it passes its assertions and terminate.</p>
       <hr>
       <footer>
         <div>© TorchlightSoftware 2014</div>
-        <div style="font-style:italic; font-size: 12px">This website was last updated at Wed Feb 05 2014 18:01:53 GMT-0700 (MST)</div>
+        <div style="font-style:italic; font-size: 12px">This website was last updated at Mon Feb 17 2014 10:03:04 GMT-0800 (PST)</div>
       </footer>
     </div>
     <!-- Scripts--><script >(function(){

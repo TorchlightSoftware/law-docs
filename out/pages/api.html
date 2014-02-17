@@ -8,7 +8,7 @@
     <title>API | Law</title>
     <meta name="description" content="When your website appears in search results in say Google, the text here will be shown underneath your website's title.">
     <meta name="keywords" content="place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website">
-    <meta name="author" content="Your Name"><meta name="generator" content="DocPad v6.60.3" />
+    <meta name="author" content="Your Name"><meta name="generator" content="DocPad v6.63.3" />
     <meta name="viewport" content="width=device-width">
     <!-- Icons-->
     <link rel="shortcut icon" href="/ico/favicon.ico">
@@ -32,12 +32,8 @@
         <div class="navbar-header"><a href="/" class="navbar-brand">Welcome</a></div>
         <ul class="nav navbar-nav">
           <li typeof="sioc:Page" about="/pages/api" class="active"><a href="/pages/api" property="dc:title">API</a></li>
-          <li typeof="sioc:Page" about="/pages/about"><a href="/pages/about" property="dc:title">About</a></li>
           <li typeof="sioc:Page" about="/pages/examples"><a href="/pages/examples" property="dc:title">Examples</a></li>
-          <li typeof="sioc:Page" about="/pages/example"><a href="/pages/example" property="dc:title">Example</a></li>
-          <li typeof="sioc:Page" about="/pages/quickstart"><a href="/pages/quickstart" property="dc:title">Quickstart</a></li>
           <li typeof="sioc:Page" about="/pages/tutorials"><a href="/pages/tutorials" property="dc:title">Tutorials</a></li>
-          <li typeof="sioc:Page" about="/pages/tutorial"><a href="/pages/tutorial" property="dc:title">Tutorial</a></li>
         </ul>
       </div>
     </nav>
@@ -80,12 +76,12 @@ contain a well-formed argument called <code>sessionId</code>.</em></p>
 <p>First, we need to create an object which maps <em>service names</em>
 to <em>service definitions</em>. The simplest possible way of doing this
 is as follows:</p>
-<pre class="highlight"><code class="autohotkey">services =
-<span class="hljs-label">  echo:</span> (args, next) -&gt;
-    # The callback <span class="hljs-escape">`n</span>ext<span class="hljs-escape">` </span>has signature <span class="hljs-escape">`(</span>err, data)<span class="hljs-escape">`.</span>
-    # Given an object <span class="hljs-escape">`a</span>rg<span class="hljs-escape">` </span>of named arguments <span class="hljs-literal">and</span> <span class="hljs-literal">a</span> callback <span class="hljs-escape">`n</span>ext<span class="hljs-escape">`
-</span>    # with signature <span class="hljs-escape">`(</span>err, data)<span class="hljs-escape">`,</span> simply <span class="hljs-keyword">return</span> <span class="hljs-keyword">while</span> calling
-    # <span class="hljs-escape">`n</span>ext<span class="hljs-escape">` </span>with <span class="hljs-literal">a</span> <span class="hljs-escape">`n</span>ull<span class="hljs-escape">` </span>first argument (meaning no error occurred).
+<pre><code>services =
+  echo: (args, next) -&gt;
+    # The callback `next` has signature `(err, data)`.
+    # Given an object `arg` of named arguments and a callback `next`
+    # with signature `(err, data)`, simply return while calling
+    # `next` with a `null` first argument (meaning no error occurred).
     next null, args
 </code></pre><p>At this point, all we have is a function. We would then use <code>law.create</code>
 to take this</p>
@@ -101,28 +97,28 @@ are described below.</p>
 of the form <code>{serviceName: serviceDef}</code>.</p>
 <p>The <code>serviceDef</code> can either a function with signature <code>(args, callback)</code>,
 or an object of the form:</p>
-<pre class="highlight"><code class="r">{
-  required: [] <span class="hljs-comment"># array of required arguments</span>
+<pre><code>{
+  required: [] # array of required arguments
   dependencies:
-    <span class="hljs-comment"># Key is a resolvable dependency category</span>
-    <span class="hljs-comment"># Value is an array of valid dependency names</span>
-    depCategory: [<span class="hljs-string">'depName1'</span>, <span class="hljs-string">'depName2'</span>, <span class="hljs-keyword">...</span>]
-  <span class="hljs-comment"># Actual async function defining the service</span>
-  service: (args, done) -&gt; <span class="hljs-keyword">...</span>
+    # Key is a resolvable dependency category
+    # Value is an array of valid dependency names
+    depCategory: [&#39;depName1&#39;, &#39;depName2&#39;, ...]
+  # Actual async function defining the service
+  service: (args, done) -&gt; ...
 }
 </code></pre><p><a name="jargon"></a></p>
 <h3 id="-jargon-jargon-"><a href="#jargon">Jargon</a></h3>
 <p>A &quot;jargon&quot; definition, which is an array of type definitions of the form:</p>
-<pre class="highlight"><code class="fsharp">{
-  # Name <span class="hljs-keyword">of</span> the <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">being</span> <span class="hljs-title">defined</span></span>
-  typeName: <span class="hljs-string">"nameOfType # String
+<pre><code>{
+  # Name of the type being defined
+  typeName: &quot;nameOfType # String
 
   # Validation function with signature `(arg, assert)`
   validation: (arg, assert) -&gt; ...
 
   defaultArgs: ...
 }
-</span></code></pre><p><a name="policy"></a></p>
+</code></pre><p><a name="policy"></a></p>
 <h3 id="-policy-policy-"><a href="#policy">Policy</a></h3>
 <p><a name="law"></a></p>
 <h2 id="-law-law-"><a href="#law"><code>law</code></a></h2>
@@ -147,9 +143,9 @@ to use in most situations.</p>
 </ul>
 <h4 id="returns">Returns</h4>
 <p>An object of the form:</p>
-<pre class="highlight"><code class="css"><span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">serviceName</span>:<span class="hljs-value"> &lt;ServiceObject&gt;
-</span></span></span>}
+<pre><code>{
+  serviceName: &lt;ServiceObject&gt;
+}
 </code></pre><p>Where <code>ServiceObject</code> is the function from the service definition, but
 endowed with validations and runtime dependency injection.</p>
 <p><a name="law.create"></a></p>
@@ -185,9 +181,9 @@ the service definition exported by each discovered module in <code>folder</code>
 <h4 id="returns">Returns</h4>
 <ul>
 <li><p><code>&lt;Object&gt;</code> :</p>
-<pre class="highlight"><code class="css"><span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">serviceName</span>:<span class="hljs-value"> &lt;ServiceObject&gt;
-</span></span></span>}
+<pre><code>{
+  serviceName: &lt;ServiceObject&gt;
+}
 </code></pre><p>Where <code>ServiceObject</code> is the function from the service definition, but
 endowed with call-time validations defined by the jargon file.</p>
 </li>
@@ -297,7 +293,7 @@ resolving dependencies.</p>
       <hr>
       <footer>
         <div>© TorchlightSoftware 2014</div>
-        <div style="font-style:italic; font-size: 12px">This website was last updated at Wed Feb 05 2014 18:01:53 GMT-0700 (MST)</div>
+        <!-- div(style="font-style:italic; font-size: 12px") This website was last updated at #{site.date}-->
       </footer>
     </div>
     <!-- Scripts--><script >(function(){

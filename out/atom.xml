@@ -3,7 +3,7 @@
   <title>Law</title>
   <link href="http://website.com/atom.xml" rel="self"/>
   <link href="http://website.com"/>
-  <updated>2014-02-06T01:01:53.753Z</updated>
+  <updated>2014-02-17T18:03:04.773Z</updated>
   <id>http://website.com</id>
   <author>
     <name>Your Name</name>
@@ -12,10 +12,10 @@
 
   
     <entry>
-      <title>This is a Hello Blog Post</title>
-      <link href="http://website.com/posts/hello"/>
-      <updated>2014-02-06T01:01:55.124Z</updated>
-      <id>http://website.com/posts/hello</id>
+      <title>This is a Goodbye Blog Post</title>
+      <link href="http://website.com/posts/bye"/>
+      <updated>2014-02-06T11:54:55.000Z</updated>
+      <id>http://website.com/posts/bye</id>
       <content type="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
@@ -23,10 +23,10 @@
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
-    &lt;title&gt;This is a Hello Blog Post | Law&lt;/title&gt;
+    &lt;title&gt;This is a Goodbye Blog Post | Law&lt;/title&gt;
     &lt;meta name=&quot;description&quot; content=&quot;When your website appears in search results in say Google, the text here will be shown underneath your website's title.&quot;&gt;
     &lt;meta name=&quot;keywords&quot; content=&quot;place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website&quot;&gt;
-    &lt;meta name=&quot;author&quot; content=&quot;Your Name&quot;&gt;&lt;meta name=&quot;generator&quot; content=&quot;DocPad v6.60.3&quot; /&gt;
+    &lt;meta name=&quot;author&quot; content=&quot;Your Name&quot;&gt;&lt;meta name=&quot;generator&quot; content=&quot;DocPad v6.63.3&quot; /&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;
     &lt;!-- Icons--&gt;
     &lt;link rel=&quot;shortcut icon&quot; href=&quot;/ico/favicon.ico&quot;&gt;
@@ -50,20 +50,16 @@
         &lt;div class=&quot;navbar-header&quot;&gt;&lt;a href=&quot;/&quot; class=&quot;navbar-brand&quot;&gt;Welcome&lt;/a&gt;&lt;/div&gt;
         &lt;ul class=&quot;nav navbar-nav&quot;&gt;
           &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/api&quot;&gt;&lt;a href=&quot;/pages/api&quot; property=&quot;dc:title&quot;&gt;API&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/about&quot;&gt;&lt;a href=&quot;/pages/about&quot; property=&quot;dc:title&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
           &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/examples&quot;&gt;&lt;a href=&quot;/pages/examples&quot; property=&quot;dc:title&quot;&gt;Examples&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/example&quot;&gt;&lt;a href=&quot;/pages/example&quot; property=&quot;dc:title&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/quickstart&quot;&gt;&lt;a href=&quot;/pages/quickstart&quot; property=&quot;dc:title&quot;&gt;Quickstart&lt;/a&gt;&lt;/li&gt;
           &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/tutorials&quot;&gt;&lt;a href=&quot;/pages/tutorials&quot; property=&quot;dc:title&quot;&gt;Tutorials&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/tutorial&quot;&gt;&lt;a href=&quot;/pages/tutorial&quot; property=&quot;dc:title&quot;&gt;Tutorial&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/div&gt;
     &lt;/nav&gt;
     &lt;div class=&quot;container&quot;&gt;
       &lt;section id=&quot;content&quot; class=&quot;content&quot;&gt;
 &lt;article id=&quot;post&quot; class=&quot;post&quot;&gt;
-  &lt;h1&gt;This is a Hello Blog Post&lt;/h1&gt;
-  &lt;div class=&quot;post-content&quot;&gt;&lt;p&gt;This is a hello &lt;strong&gt;blog post&lt;/strong&gt;&lt;/p&gt;
+  &lt;h1&gt;This is a Goodbye Blog Post&lt;/h1&gt;
+  &lt;div class=&quot;post-content&quot;&gt;&lt;p&gt;This is a goodbye &lt;strong&gt;blog post&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/article&gt;
 &lt;footer&gt;
@@ -71,7 +67,7 @@
       &lt;hr&gt;
       &lt;footer&gt;
         &lt;div&gt;© TorchlightSoftware 2014&lt;/div&gt;
-        &lt;div style=&quot;font-style:italic; font-size: 12px&quot;&gt;This website was last updated at Wed Feb 05 2014 18:01:53 GMT-0700 (MST)&lt;/div&gt;
+        &lt;!-- div(style=&quot;font-style:italic; font-size: 12px&quot;) This website was last updated at #{site.date}--&gt;
       &lt;/footer&gt;
     &lt;/div&gt;
     &lt;!-- Scripts--&gt;&lt;script &gt;(function(){
@@ -125,10 +121,10 @@ var inject = function(){
     </entry>
   
     <entry>
-      <title>This is a Goodbye Blog Post</title>
-      <link href="http://website.com/posts/bye"/>
-      <updated>2014-02-06T01:01:55.004Z</updated>
-      <id>http://website.com/posts/bye</id>
+      <title>This is a Hello Blog Post</title>
+      <link href="http://website.com/posts/hello"/>
+      <updated>2014-02-06T11:54:55.000Z</updated>
+      <id>http://website.com/posts/hello</id>
       <content type="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
@@ -136,10 +132,10 @@ var inject = function(){
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
-    &lt;title&gt;This is a Goodbye Blog Post | Law&lt;/title&gt;
+    &lt;title&gt;This is a Hello Blog Post | Law&lt;/title&gt;
     &lt;meta name=&quot;description&quot; content=&quot;When your website appears in search results in say Google, the text here will be shown underneath your website's title.&quot;&gt;
     &lt;meta name=&quot;keywords&quot; content=&quot;place, your, website, keywoards, here, keep, them, related, to, the, content, of, your, website&quot;&gt;
-    &lt;meta name=&quot;author&quot; content=&quot;Your Name&quot;&gt;&lt;meta name=&quot;generator&quot; content=&quot;DocPad v6.60.3&quot; /&gt;
+    &lt;meta name=&quot;author&quot; content=&quot;Your Name&quot;&gt;&lt;meta name=&quot;generator&quot; content=&quot;DocPad v6.63.3&quot; /&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;
     &lt;!-- Icons--&gt;
     &lt;link rel=&quot;shortcut icon&quot; href=&quot;/ico/favicon.ico&quot;&gt;
@@ -163,20 +159,16 @@ var inject = function(){
         &lt;div class=&quot;navbar-header&quot;&gt;&lt;a href=&quot;/&quot; class=&quot;navbar-brand&quot;&gt;Welcome&lt;/a&gt;&lt;/div&gt;
         &lt;ul class=&quot;nav navbar-nav&quot;&gt;
           &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/api&quot;&gt;&lt;a href=&quot;/pages/api&quot; property=&quot;dc:title&quot;&gt;API&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/about&quot;&gt;&lt;a href=&quot;/pages/about&quot; property=&quot;dc:title&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
           &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/examples&quot;&gt;&lt;a href=&quot;/pages/examples&quot; property=&quot;dc:title&quot;&gt;Examples&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/example&quot;&gt;&lt;a href=&quot;/pages/example&quot; property=&quot;dc:title&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/quickstart&quot;&gt;&lt;a href=&quot;/pages/quickstart&quot; property=&quot;dc:title&quot;&gt;Quickstart&lt;/a&gt;&lt;/li&gt;
           &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/tutorials&quot;&gt;&lt;a href=&quot;/pages/tutorials&quot; property=&quot;dc:title&quot;&gt;Tutorials&lt;/a&gt;&lt;/li&gt;
-          &lt;li typeof=&quot;sioc:Page&quot; about=&quot;/pages/tutorial&quot;&gt;&lt;a href=&quot;/pages/tutorial&quot; property=&quot;dc:title&quot;&gt;Tutorial&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/div&gt;
     &lt;/nav&gt;
     &lt;div class=&quot;container&quot;&gt;
       &lt;section id=&quot;content&quot; class=&quot;content&quot;&gt;
 &lt;article id=&quot;post&quot; class=&quot;post&quot;&gt;
-  &lt;h1&gt;This is a Goodbye Blog Post&lt;/h1&gt;
-  &lt;div class=&quot;post-content&quot;&gt;&lt;p&gt;This is a goodbye &lt;strong&gt;blog post&lt;/strong&gt;&lt;/p&gt;
+  &lt;h1&gt;This is a Hello Blog Post&lt;/h1&gt;
+  &lt;div class=&quot;post-content&quot;&gt;&lt;p&gt;This is a hello &lt;strong&gt;blog post&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/article&gt;
 &lt;footer&gt;
@@ -184,7 +176,7 @@ var inject = function(){
       &lt;hr&gt;
       &lt;footer&gt;
         &lt;div&gt;© TorchlightSoftware 2014&lt;/div&gt;
-        &lt;div style=&quot;font-style:italic; font-size: 12px&quot;&gt;This website was last updated at Wed Feb 05 2014 18:01:53 GMT-0700 (MST)&lt;/div&gt;
+        &lt;!-- div(style=&quot;font-style:italic; font-size: 12px&quot;) This website was last updated at #{site.date}--&gt;
       &lt;/footer&gt;
     &lt;/div&gt;
     &lt;!-- Scripts--&gt;&lt;script &gt;(function(){

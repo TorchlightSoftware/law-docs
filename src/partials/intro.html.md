@@ -37,8 +37,6 @@ The *Policy* file is where broader preconditions (such as access control) can be
 This lets you record the assumptions of your services in one place, explicitly, and easily
 modified as your application grows.
 
-## Problems solved
-
 ## Rationale
 
 ### Problems live in domains
@@ -53,26 +51,19 @@ and it can be hard to make them match.
 ### We need to organize our machinery
 
 When we build a system, we need to make sure our concepts are true to the domain.
-We can check this "manually" with lots of conditional logic, double-checking---bookkeeping.
+We can check this "manually" with lots of conditional logic, double-checking—bookkeeping.
 But this is easily scattered across the codebase, making it hard to modify and maintain.
 
-### JavaScript's types cannot directly encode many constraints
+### Domain modeling and data flow
 
-JavaScript's typing regime is incredibly flexible, but at a cost. Suppose we create
-a constructor for a class representing an email address. This task might be more complex
-than it sounds. Ultimately, what we want is a subset of all possible instances of
-`String`. We can make instances of this class correct by construction by *validating*
-the constructor arguments.
-
-But, though methods on an object have at least self-knowledge, functions generally must
-still must validate all of their explicit inputs. This can lead to a codebase whose
-function bodies are littered with guards and validation calls. The problem is only
-exacerbated when we attempt ad hoc polymorphism. Furthermore, we may have validations
-which depend entirely upon runtime state. Such validations frequently end up as conditional
-test-and-dispatch logic embedded in the cracks of a codebase.
+By validating constructor arguments, we can ensure that objects being used to model a problem
+domain are correct when instantiated. But, though methods on an object have at least self-knowledge,
+services must still must validate all of their inputs. This presents a conflict in scenarios
+where we want to think of a program as data flowing through a pipeline of services, being
+transformed as it goes.
 
 Law is an effort to make our domain modeling readable, extensible, and semantic.
-
+It does so by providing a means of reasoning about domain objects *and* data transformation.
 
 
 ## Inspiration and Foundations

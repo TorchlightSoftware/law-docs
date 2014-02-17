@@ -54,15 +54,23 @@
 <!-- Example row of columns.-->
 <div class="row">
   <div class="col-md-6">
-    <h2>Domain-driven</h2>
-    <p>Law lets you write an API in the language of your problem.</p>
-    <p>Pull argument validation out of your services and into a "jargon" file.</p>
+    <h2>Problems solved</h2>
+    <p>Law lets you:</p>
+    <ul>
+      <li>Easily reason about business logic by separating concerns</li>
+      <li>Encode your domain assumptions and requirements in one place</li>
+      <li>Write safe but still-composable services with a uniform interface</li>
+      <li>Have a single, declarative description of your access control policy</li>
+    </ul>
+    <p>Take a look at the code here:</p>
     <p><a href="https://github.com/TorchlightSoftware/law" class="btn btn-default">Visit Website</a></p>
   </div>
   <div class="col-md-6">
-    <h2>Works with what you work with</h2>
-    <p>Law services are just functions, and can be exposed via REST, websockets, or any other transport.</p>
-    <p>Check out the Connect middleware for exposing your Law services via HTTP!</p>
+    <h2>Interface Agnostic</h2>
+    <p>A Law service is just a function. We have plugins to expose services via REST and websockets, and of course they can be accessed programmatically out of the box.</p>
+    <p>Further adapters can be created as well&mdash;e.g. if you needed a SOAP interface, that should be possible.</p>
+    <p>Here are links to some existing adapters:</p>
+    <h3>Law-Connect</h3>
     <p><a href="https://github.com/TorchlightSoftware/law-connect" class="btn btn-default">Law-Connect</a></p>
   </div>
 </div>
@@ -96,7 +104,6 @@ runtime expectations can be written once, here, and referred to by services.</p>
 <p>The <em>Policy</em> file is where broader preconditions (such as access control) can be declared.
 This lets you record the assumptions of your services in one place, explicitly, and easily
 modified as your application grows.</p>
-<h2 id="problems-solved">Problems solved</h2>
 <h2 id="rationale">Rationale</h2>
 <h3 id="problems-live-in-domains">Problems live in domains</h3>
 <p>We build applications to solve problems. These problems don&#39;t live in a vacuum.
@@ -107,21 +114,16 @@ The actual computational machinery we build is expressed in one of these languag
 and it can be hard to make them match.</p>
 <h3 id="we-need-to-organize-our-machinery">We need to organize our machinery</h3>
 <p>When we build a system, we need to make sure our concepts are true to the domain.
-We can check this &quot;manually&quot; with lots of conditional logic, double-checking---bookkeeping.
+We can check this &quot;manually&quot; with lots of conditional logic, double-checking—bookkeeping.
 But this is easily scattered across the codebase, making it hard to modify and maintain.</p>
-<h3 id="javascript-s-types-cannot-directly-encode-many-constraints">JavaScript&#39;s types cannot directly encode many constraints</h3>
-<p>JavaScript&#39;s typing regime is incredibly flexible, but at a cost. Suppose we create
-a constructor for a class representing an email address. This task might be more complex
-than it sounds. Ultimately, what we want is a subset of all possible instances of
-<code>String</code>. We can make instances of this class correct by construction by <em>validating</em>
-the constructor arguments.</p>
-<p>But, though methods on an object have at least self-knowledge, functions generally must
-still must validate all of their explicit inputs. This can lead to a codebase whose
-function bodies are littered with guards and validation calls. The problem is only
-exacerbated when we attempt ad hoc polymorphism. Furthermore, we may have validations
-which depend entirely upon runtime state. Such validations frequently end up as conditional
-test-and-dispatch logic embedded in the cracks of a codebase.</p>
-<p>Law is an effort to make our domain modeling readable, extensible, and semantic.</p>
+<h3 id="domain-modeling-and-data-flow">Domain modeling and data flow</h3>
+<p>By validating constructor arguments, we can ensure that objects being used to model a problem
+domain are correct when instantiated. But, though methods on an object have at least self-knowledge,
+services must still must validate all of their inputs. This presents a conflict in scenarios
+where we want to think of a program as data flowing through a pipeline of services, being
+transformed as it goes.</p>
+<p>Law is an effort to make our domain modeling readable, extensible, and semantic.
+It does so by providing a means of reasoning about domain objects <em>and</em> data transformation.</p>
 <h2 id="inspiration-and-foundations">Inspiration and Foundations</h2>
 <p>Our approach to policies was inspired by the filter lifecycle from Ruby on Rails.
 The argument validations take some ideas from Design By Contract, e.g.

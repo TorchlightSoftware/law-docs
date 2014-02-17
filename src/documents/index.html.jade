@@ -16,14 +16,21 @@ title: 'Law'
 // Example row of columns.
 .row
   .col-md-6
-    h2 Domain-driven
-    p Law lets you write an API in the language of your problem.
-    p Pull argument validation out of your services and into a "jargon" file.
+    h2 Problems solved
+    p Law lets you:
+    ul
+      li Easily reason about business logic by separating concerns
+      li Encode your domain assumptions and requirements in one place
+      li Write safe but still-composable services with a uniform interface
+      li Have a single, declarative description of your access control policy
+    p Take a look at the code here:
     p: a.btn.btn-default(href="https://github.com/TorchlightSoftware/law") Visit Website
   .col-md-6
-    h2 Works with what you work with
-    p Law services are just functions, and can be exposed via REST, websockets, or any other transport.
-    p Check out the Connect middleware for exposing your Law services via HTTP!
+    h2 Interface Agnostic
+    p A Law service is just a function. We have plugins to expose services via REST and websockets, and of course they can be accessed programmatically out of the box.
+    p Further adapters can be created as well&mdash;e.g. if you needed a SOAP interface, that should be possible.
+    p Here are links to some existing adapters:
+    h3 Law-Connect
     p: a.btn.btn-default(href="https://github.com/TorchlightSoftware/law-connect") Law-Connect
 
 .something

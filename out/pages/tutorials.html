@@ -41,8 +41,332 @@
       <section id="content" class="content">
 <article id="page" class="page">
   <h1>Tutorials</h1>
-  <div class="page-content"><p>This is a <strong>page</strong></p>
-</div>
+  <div class="page-content"><h1 id="api-tutorial">API tutorial</h1>
+<p>We will demonstrate the process of building a simple API using Law.</p>
+<h2 id="problem">Problem</h2>
+<p>First, a problem: we want to store some contact information. We will build an API
+to set, get, and delete phone number records from a toy in-memory data store.</p>
+<h2 id="data-model">Data model</h2>
+<p>For simplicity&#39;s sake, we will assume that contact names are unique. Our toy
+database will then simply be a key-value mapping, with names as the keys, and phone
+numbers as the values. We will also assume that we need to only store US-style
+phone numbers, roughly of the form <code>(xxx)-xxx-xxxx</code>.</p>
+<h2 id="project-structure">Project structure</h2>
+<p>We create our initial project directory structure:</p>
+<pre><code>/app/
+ /main.coffee
+ /db.coffee
+ /services
+   /contacts/
+     /set.coffee
+     /get.coffee
+     /delete.coffee
+</code></pre><p>Inside the <code>app/services</code> directory, we&#39;ll include each of our services as
+separate files. In particular, we will place all of our contact CRUD services
+inside the <code>contacts</code> subdirectory. This is not obligatory, but provides a nice,
+modular way of organizing our service definitions. It will also have the effect
+of namespacing the resulting services</p>
+<p>The file <code>db</code> will simply export a mutable JavaScript object that will act as
+our toy in-memory database for both user sessions and contact data.</p>
+<p>The contents of db.coffee will look like this:</p>
+<pre><code># app/db.coffee
+
+module.exports = {sessions: {}, contacts: {}}
+</code></pre><h2 id="sessions">Sessions</h2>
+<p>We will suppose that a login/session management API is implemented elsewhere in
+the application, and that we can check the validity of a <code>sessionId</code> by checking
+to see if it maps to the string &#39;valid&#39; in <code>db.sessions</code>. We&#39;ll assume that
+a <code>sessionId</code> is a 16-digit hexadecimal string.</p>
+<h2 id="our-first-service">Our first service</h2>
+<p>Let&#39;s start with our <code>contact/set</code> service. This attempts to create a new
+contact record if it is not already there, or update one if it exists.
+Semantically, it is meant to behave like the HTTP <code>PUT</code> method.</p>
+<p>We will first write a naive implementation of this service, then show how
+it can be refactored using the machinery of Law. This refactoring will then
+have immediate benefits, which we will see in our implementation of the remaining
+services.</p>
+<p>Our <code>contact/set</code> service should accept an <code>args</code> object containing values for
+<code>name</code> and <code>number</code> properties, as well as a <code>sessionId</code> token, to ensure that
+only logged-in users can edit the contact list.</p>
+<pre><code># app/services/contacts/set.coffee
+
+db = require &#39;../../db&#39;
+
+module.exports = ({sessionId, contactName, phoneNumber}, done) -&gt;
+  # Check for existence of required arguments
+  unless sessionId
+    return done new Error(&#39;Missing required argument: sessionId&#39;)
+
+  unless contactName
+    return done new Error(&#39;Missing required argument: name&#39;)
+
+  unless number
+    return done new Error(&#39;Missing required argument: phoneNumber&#39;)
+
+  # Make sure that sessionId is a string
+  unless typeof sessionId is &#39;string&#39;
+    return done new Error(&#39;sessionId must be a string&#39;)
+
+  # Check that sessionId is what we expect--a 16-digit hex string.
+  sessionIdFormat = /[a-z0-9]{16}/
+  unless sessionIdFormat.test(sessionId)
+    return done new Error(&#39;Malformed sessionId&#39;)
+
+  # Make sure the service request comes from a logged-in user
+  unless db.sessions[sessionId] is &#39;valid&#39;
+    return done new Error(&#39;sessionId not valid&#39;)
+
+  # Make sure the contact name is a string
+  unless typeof contactName is &#39;string&#39;
+    return done new Error(&#39;contactName must be a string&#39;)
+
+  # Make sure that `phoneNumber` is well-formed
+  # [Source]
+  #   http://coffeescriptcookbook.com/chapters/regular_expressions/heregexes
+  phoneNumberFormat = ///
+    ^\(?(\d{3})\)? # Capture area code, ignore optional parens
+    [-\s]?(\d{3})  # Capture prefix, ignore optional dash or space
+    -?(\d{4})      # Capture line-number, ignore optional dash
+  ///
+  unless phoneNumberFormat.test(phoneNumber)
+    return done new Error(&#39;phoneNumber not well-formed&#39;)
+
+  # Finally! We&#39;ve made it through all our validation conditionals.
+  # Our arguments all exist, and are valid.
+  # We can finally implement the basic business logic.
+  db.contacts[contactName] = phoneNumber
+
+  # We are done, so we simply relinquish control flow
+  return done()
+</code></pre><p>Interesting. It looks like the meat of our service consists of just one line.
+Most of the function body is checking preconditions. We&#39;ll come back to that
+in a moment.</p>
+<p>To call this service <em>through</em> Law, we create a <code>services</code> object. Law offers
+a helper function that lets us simply specify the directory containing all our
+services. Thus, the relevant part of our <code>main.coffee</code> file would look like this:</p>
+<pre><code># app/main.coffee
+
+law = require &#39;law&#39;
+
+# [...omitted]
+
+# Load service definitions from the filesystem
+serviceDefs = law.load &#39;./services&#39;
+
+# Wire everything up. We can now call `contact/set` via
+# invoking the (callable) value of `services[&#39;contact/set&#39;]`.
+services = law.create {services: serviceDefs}
+
+# [...omitted]
+</code></pre><p>So far, it isn&#39;t at all clear what benefit we get from calling our function
+as a Law service. We are about to see it, however, because now we want to
+write our other services. These services will need to check many of the same
+runtime preconditions. Law gives us tools to factor this logic out.</p>
+<p>First, we wil rewrite our <code>contact/set</code> service definition to have an enriched
+Law signature. The definition itself will no longer be directly callable, but
+the enriched <em>service</em> will be via <code>services[&#39;contacts/set&#39;]</code>.</p>
+<pre><code>db = require &#39;../../db&#39;
+
+module.exports =
+  required: [&#39;sessionId&#39;, &#39;contactName&#39;, &#39;phoneNumber&#39;]
+  service: ({sessionId, contactName, phoneNumber}, done) -&gt;
+
+  # We no longer need to check that our required arguments exist!
+  # The rest of the validations are still required, though (for now).
+
+  # Make sure the service request comes from a logged-in user
+  unless db.sessions[sessionId] is &#39;valid&#39;
+    return done new Error(&#39;sessionId not valid&#39;)
+
+  # [...omitted]
+</code></pre><p>This is an improvement, but we can do better. Let&#39;s make a Jargon file!
+We&#39;ll use this to define a mapping of argument names (keys to the first
+argument of our service) to validations.</p>
+<pre><code># app/jargon.coffee
+
+module.exports = [
+  # This type simply requires the value to be a string.
+  typeName: &#39;String&#39;
+  validation: (arg, assert) -&gt;
+    # Note that `assert` is just a callback!
+    # We call it `assert` here just for the sake of making our validation
+    # function look more like a mini-EDSL.
+    assert typeof arg is &#39;string&#39;
+  # In our application, this validation actually applies all of the
+  # argument types we&#39;ve looked at so far.
+  defaultArgs: [&#39;sessionId&#39;, &#39;contactName&#39;, &#39;phoneNumber&#39;]
+ ,
+  # Now we have a more specific argument type. Here is where we will
+  # place our sessionId well-formedness logic. We&#39;ll save the login
+  # status check for elsewhere, though.
+  typeName: &#39;SessionId&#39;
+  validation: (arg, assert) -&gt;
+    sessionIdFormat = /[a-z0-9]{16}/
+    assert sessionIdFormat.test(arg)
+  defaultArgs: [&#39;sessionId&#39;]
+ ,
+  # Last one! Just the same regex check from earlier.
+  typeName: &#39;PhoneNumber&#39;
+  validation: (arg, assert) -&gt;
+    phoneNumberFormat = ///
+      ^\(?(\d{3})\)? # Capture area code, ignore optional parens
+      [-\s]?(\d{3})  # Capture prefix, ignore optional dash or space
+      -?(\d{4})      # Capture line-number, ignore optional dash
+    ///
+    assert phoneNumberFormat.test(arg)
+]
+</code></pre><p>Alright! Now, when we wire up our Law services, we just require
+the Jargon file and pass the resulting data structure to <code>law.create</code>:</p>
+<pre><code># app/main.coffee
+
+# [...omitted]
+
+services = law.create {
+  # Load service definitions from the filesystem
+  services: law.load(&#39;./services&#39;),
+  # Load the exports of our Jargon file
+  jargon: require(&#39;./jargon&#39;)
+}
+
+# [...omitted]
+</code></pre><p>Since our existence and well-formedness validations are now handled
+by Law, our service definition has been simplified to the following:</p>
+<pre><code># app/services/contacts/set.coffee
+
+db = require &#39;../../db&#39;
+
+module.exports =
+  required: [&#39;sessionId&#39;, &#39;contactName&#39;, &#39;phoneNumber&#39;]
+  service: ({sessionId, contactName, phoneNumber}, done) -&gt;
+
+  # We no longer need to check that our required arguments exist,
+  # are the correct JavaScript type, or are well-formed!
+
+  # We still need to make sure the service request comes
+  # from a logged-in user.
+  unless db.sessions[sessionId] is &#39;valid&#39;
+    return done new Error(&#39;sessionId not valid&#39;)
+
+  # The actual act of data storage
+  db.contacts[contactName] = phoneNumber
+
+  # We are done, so we simply relinquish control flow
+  return done()
+</code></pre><p>This is much nicer, and all of our previous validations have
+been (1) associated with named concepts in the Jargon file, (2)
+are immediately applied to other services with the same argument names.</p>
+<p>We can still do better. Law lets us define a Policy file for access
+control. This will let us factor out the login check into a service of
+its own, and declare its application in one place in our project.</p>
+<p>Here is what our <code>policy.coffee</code> file will look like:</p>
+<pre><code># app/policy.coffee
+
+module.exports =
+  # This just indicates that the filter services are not just in the
+  # `services` subdirectory of our project, are further kept together
+  # in a `filters` subdirectory, and namespaced with `services/filters`.
+  filterPrefix: &#39;filters&#39;
+  rules: [
+    # We expect a filtering service called `isLoggedIn` to be called
+    # before every service
+    filters: [&#39;isLoggedIn&#39;]
+    # ...except for the actual `login` service, which we will not
+    # define in this tutorial
+    except: [&#39;login&#39;]
+  ]
+</code></pre><p>We modify our Law setup to use the Policy file:</p>
+<pre><code># app/main.coffee
+
+services = law.create {
+  # Load service definitions from the filesystem
+  services: law.load(&#39;./services&#39;),
+  # Load the exports of our Jargon file
+  jargon: require(&#39;./jargon&#39;)
+  # Load the exported Policy data structure, too
+  policy: require(&#39;./policy&#39;)
+}
+</code></pre><p>And define our <code>isLoggedIn</code> filter as a service in the appropriate directory,
+which we also indicated in our Policy file:</p>
+<pre><code># app/services/filters/isLoggedIn.coffee
+db = require &#39;../../db.coffee&#39;
+
+module.exports =
+  required: [&#39;sessionId&#39;]
+  service: ({sessionId}, done) -&gt;
+
+    if db.sessions[sessionId] is &#39;valid&#39;
+      return done()
+    else
+      return done new Error(&#39;sessionId not valid&#39;)
+</code></pre><p>Now, we have the final form of our <code>contact/set</code> service:</p>
+<pre><code># app/services/contacts/set.coffee
+
+db = require &#39;../../db&#39;
+
+module.exports =
+  required: [&#39;sessionId&#39;, &#39;contactName&#39;, &#39;phoneNumber&#39;]
+  service: ({contactName, phoneNumber}, done) -&gt;
+
+  # As before, we no longer need to check that our required arguments
+  # exist, are the correct JavaScript type, or are well-formed!
+
+  # We can also be sure that the service is being called by a logged-in
+  # user with a valid `sessionId`, so we no longer need to pull it out
+  # of the first args object of the service.
+
+  # The ONLY code in our service is the actual act of data storage!
+  # If this were, say, an asynchronous call to a database driver, that
+  # complexity would be easier to approach, test, and worry about on its
+  # own, without the validation code.
+
+  db.contacts[contactName] = phoneNumber
+
+  return done()
+</code></pre><p>So, after all that work, what about our other services? Thanks to our use of
+Law to declare our validation logic (and expose it to all services), the rest
+of our services are almost trivial to write correctly:</p>
+<pre><code># app/services/contacts/get.coffee
+
+db = require &#39;../../db&#39;
+
+module.exports =
+  required: [&#39;sessionId&#39;, &#39;contactName&#39;]
+  service: ({contactName}), done) -&gt;
+
+    phoneNumber = db[contactName]
+
+    if phoneNumber
+      return done err, {phoneNumber}
+    else
+      return done new Error(&quot;No number found for contact &#39;#{contactName}&#39;&quot;)
+</code></pre><pre><code># app/services/contacts/delete.coffee
+
+db = require &#39;../../db&#39;
+
+module.exports =
+  required: [&#39;sessionId&#39;, &#39;contactName&#39;]
+  service: ({contactName}), done) -&gt;
+
+    success = delete db[contactName]
+
+    if success
+      return done()
+    else
+      return done new Error(&quot;Could not delete contact &#39;#{contactName}&#39;&quot;)
+</code></pre><p>And to recap, our final directory structure looks like this:</p>
+<pre><code>/app/
+ /main.coffee
+ /db.coffee
+ /jargon.coffee
+ /policy.coffee
+ /services
+   /filters/
+     /isLoggedIn.coffee
+   /contacts/
+     /set.coffee
+     /get.coffee
+     /delete.coffee
+</code></pre></div>
 </article></section>
       <hr>
       <footer>

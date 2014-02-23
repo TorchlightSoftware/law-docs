@@ -70,9 +70,9 @@ it can be refactored using the machinery of Law. This refactoring will then
 have immediate benefits, which we will see in our implementation of the remaining
 services.
 
-Our `contact/set` service should accept an `args` object containing values for
-`name` and `number` properties, as well as a `sessionId` token, to ensure that
-only logged-in users can edit the contact list.
+Our `contact/set` service should accept, as its first parameter, an `args` object
+containing values for `contactName` and `phoneNumber` properties, as well as a `sessionId`
+token, to ensure that only logged-in users can edit the contact list.
 
 ```
 # app/services/contacts/set.coffee
@@ -406,3 +406,10 @@ And to recap, our final directory structure looks like this:
      /get.coffee
      /delete.coffee
 ```
+
+As we saw, Law let us not only factor out our access control and service validations,
+but do so in a way that defined a small conceptual language. While the actual business
+logic of these toy services was very simple, we immediately saw just how many
+assumptions we really need to check before we get to the true logic of a service.
+Law is meant to let us express this logic this in the most readable, maintainable,
+and semantic way possible.

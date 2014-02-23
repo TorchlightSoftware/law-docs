@@ -85,9 +85,9 @@ Semantically, it is meant to behave like the HTTP <code>PUT</code> method.</p>
 it can be refactored using the machinery of Law. This refactoring will then
 have immediate benefits, which we will see in our implementation of the remaining
 services.</p>
-<p>Our <code>contact/set</code> service should accept an <code>args</code> object containing values for
-<code>name</code> and <code>number</code> properties, as well as a <code>sessionId</code> token, to ensure that
-only logged-in users can edit the contact list.</p>
+<p>Our <code>contact/set</code> service should accept, as its first parameter, an <code>args</code> object
+containing values for <code>contactName</code> and <code>phoneNumber</code> properties, as well as a <code>sessionId</code>
+token, to ensure that only logged-in users can edit the contact list.</p>
 <pre><code># app/services/contacts/set.coffee
 
 db = require &#39;../../db&#39;
@@ -366,7 +366,13 @@ module.exports =
      /set.coffee
      /get.coffee
      /delete.coffee
-</code></pre></div>
+</code></pre><p>As we saw, Law let us not only factor out our access control and service validations,
+but do so in a way that defined a small conceptual language. While the actual business
+logic of these toy services was very simple, we immediately saw just how many
+assumptions we really need to check before we get to the true logic of a service.
+Law is meant to let us express this logic this in the most readable, maintainable,
+and semantic way possible.</p>
+</div>
 </article></section>
       <hr>
       <footer>
